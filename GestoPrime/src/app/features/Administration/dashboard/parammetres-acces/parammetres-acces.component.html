@@ -1,0 +1,102 @@
+<div class="container-fluid py-4 fade-in page-bg">
+  <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <div>
+      <h4 class="fw-bold text-dark m-0 tracking-tight">Paramétrage d'Accès</h4>
+      <p class="text-muted small mb-0 mt-1">Gérez les privilèges et les accès des collaborateurs au SIRH</p>
+    </div>
+    <button class="btn btn-add-access shadow-sm" (click)="openAjoutModal()">
+      <i class="bi bi-person-plus-fill me-2"></i>Ajouter un Accès
+    </button>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4 rounded-4 overflow-hidden">
+    <div class="card-body bg-white p-3">
+      <div class="search-friendly">
+        <i class="bi bi-search text-muted ms-3"></i>
+        <input type="text" class="form-control border-0 shadow-none bg-transparent" 
+               placeholder="Rechercher par matricule ou nom de collaborateur..." 
+               [(ngModel)]="searchTerm" (input)="onSearch()">
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="thead-friendly">
+          <tr>
+            <th class="ps-4">Collaborateur</th>
+            <th>Matricule</th>
+            <th>Privilège</th>
+            <th>Établissement / Filiale</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="isLoading">
+            <td colspan="5" class="py-5 text-center">
+              <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+              <span class="ms-2 text-muted small">Chargement des comptes...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let u of users" class="row-hover">
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <div class="avatar-sm me-3">{{ u.nom_Prenom?.charAt(0) || 'U' }}</div>
+                <div>
+                  <div class="fw-bold text-dark lh-1">{{ u.nom_Prenom }}</div>
+                  <small class="text-muted x-small">Modifié le {{ u.date_Mvt | date:'dd/MM/yyyy' }}</small>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge-matricule">{{ u.matricule }}</span></td>
+            <td>
+              <span class="badge-role" [ngClass]="u.privilege">
+                {{ u.privilege }}
+              </span>
+            </td>
+            <td>
+              <div class="text-secondary small">
+                <i class="bi bi-building me-1"></i>{{ u.etablissement || 'Groupe Holding' }}
+              </div>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-action-delete" (click)="onDelete(u.matricule)" title="Supprimer l'accès">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="users.length === 0 && !isLoading">
+            <td colspan="5" class="py-5 text-center text-muted">
+              <i class="bi bi-person-x fs-2 d-block mb-2 opacity-50"></i>
+              Aucun compte utilisateur trouvé.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-white border-top-0 py-3 px-4 d-flex justify-content-between align-items-center">
+      <span class="text-muted small">Total : <b>{{ totalItems }}</b> utilisateurs</span>
+      
+      <div class="d-flex align-items-center gap-3">
+        <select class="form-select form-select-sm w-auto border-0 bg-light" [(ngModel)]="pageSize" (change)="onSearch()">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }} / page</option>
+        </select>
+        <nav>
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="changePage(currentPage - 1)"><i class="bi bi-chevron-left"></i></button>
+            </li>
+            <li class="page-item active"><span class="page-link">{{ currentPage }}</span></li>
+            <li class="page-item" [class.disabled]="currentPage >= totalPages">
+              <button class="page-link" (click)="changePage(currentPage + 1)"><i class="bi bi-chevron-right"></i></button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

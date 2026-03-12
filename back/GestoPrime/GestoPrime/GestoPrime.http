@@ -1,0 +1,6 @@
+@GestoPrime_HostAddress = http://localhost:5253
+
+GET {{GestoPrime_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

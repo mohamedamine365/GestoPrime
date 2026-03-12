@@ -1,0 +1,118 @@
+<div class="container-fluid py-4 fade-in page-bg">
+  <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <div>
+      <h4 class="fw-bold text-dark m-0 tracking-tight">Journal des Mouvements</h4>
+      <p class="text-muted small mb-0">Historique des flux synchronisés avec GestoPrime</p>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-export excel" (click)="downloadExcel()" [disabled]="isLoading">
+  <span *ngIf="!isLoading"><i class="bi bi-file-earmark-excel me-1"></i> Excel</span>
+  <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+</button>
+
+<button class="btn btn-export pdf" (click)="downloadPdf()" [disabled]="isLoading">
+  <span *ngIf="!isLoading"><i class="bi bi-file-earmark-pdf me-1"></i> PDF</span>
+  <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+</button>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4 rounded-4 overflow-hidden">
+    <div class="card-body bg-white p-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-8">
+          <div class="search-friendly">
+            <i class="bi bi-search text-muted ms-3"></i>
+            <input type="text" class="form-control border-0 shadow-none bg-transparent" 
+                   placeholder="Rechercher par matricule ou nom..." 
+                   [(ngModel)]="filters.search" (input)="onFilterChange()">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select border-0 select-friendly" [(ngModel)]="filters.resultat" (change)="onFilterChange()">
+            <option value="">Tous les statuts</option>
+            <option value="Success">Succès uniquement</option>
+            <option value="Failed">Échecs uniquement</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="thead-friendly">
+          <tr>
+            <th class="ps-4">Matricule</th>
+            <th>Collaborateur</th>
+            <th>Date & Heure</th>
+            <th>Site</th>
+            <th class="text-end pe-4">Résultat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="isLoading">
+            <td colspan="5" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm me-2" role="status"></div>
+              <span class="text-muted small fw-medium">Synchronisation des données...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let m of mouvements" class="row-hover">
+            <td class="ps-4">
+              <span class="badge-matricule">{{ m.matricule }}</span>
+            </td>
+            <td>
+              <div class="fw-bold text-dark">{{ m.nomPrenom || '---' }}</div>
+            </td>
+            <td>
+              <div class="text-secondary small">
+                <i class="bi bi-calendar3 me-2"></i>{{ m.date_Mvt | date:'dd/MM/yyyy HH:mm' }}
+              </div>
+            </td>
+            <td><span class="site-pill">{{ m.site || 'N/A' }}</span></td>
+            <td class="text-end pe-4">
+              <span class="status-badge" [ngClass]="m.resultat === 'Success' ? 'status-success' : 'status-failed'">
+                <i class="bi" [ngClass]="m.resultat === 'Success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'"></i>
+                {{ m.resultat === 'Success' ? 'Réussi' : 'Échec' }}
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="!isLoading && mouvements.length === 0">
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="bi bi-inbox fs-2 d-block mb-2 opacity-25"></i>
+              Aucun mouvement ne correspond à vos critères.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-white border-top-0 py-3 px-4 d-flex justify-content-between align-items-center">
+      <div class="text-muted small">
+        Affichage de <b>{{ mouvements.length }}</b> sur <b>{{ totalItems }}</b> résultats
+      </div>
+      
+      <div class="d-flex align-items-center gap-3">
+        <select class="form-select form-select-sm w-auto border-0 bg-light fw-bold text-secondary" 
+                [(ngModel)]="filters.pageSize" (change)="onFilterChange()">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }} / page</option>
+        </select>
+        
+        <nav>
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item" [class.disabled]="filters.page === 1">
+              <button class="page-link" (click)="changePage(filters.page - 1)"><i class="bi bi-chevron-left"></i></button>
+            </li>
+            <li class="page-item active"><span class="page-link">{{ filters.page }}</span></li>
+            <li class="page-item" [class.disabled]="filters.page >= totalPages">
+              <button class="page-link" (click)="changePage(filters.page + 1)"><i class="bi bi-chevron-right"></i></button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

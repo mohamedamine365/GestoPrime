@@ -1,0 +1,29 @@
+<header class="navbar navbar-expand-lg navbar-light bg-white px-4 py-2 shadow-sm border-bottom sticky-top">
+  <div class="container-fluid">
+    <div class="navbar-brand d-flex align-items-center">
+      <img src="assets/images/GestoPrime.png" alt="GestoPrime" class="header-logo-brand">
+      <div class="vr mx-3 d-none d-md-block opacity-25" style="height: 25px;"></div>
+      <img src="assets/images/sirhp.png" alt="SIRH" class="header-logo-sirh d-none d-sm-block">
+    </div>
+
+    <div class="d-flex align-items-center gap-3" *ngIf="user">
+      <div class="text-end d-none d-lg-block">
+        <p class="mb-0 x-small text-uppercase fw-bold text-muted tracking-wider" style="font-size: 0.65rem;">Session active</p>
+        <span class="fw-semibold text-dark small"> 
+          {{ user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']|| 'Utilisateur' }} 
+        </span>
+      </div>
+      
+      <div class="avatar-header shadow-sm text-white d-flex align-items-center justify-content-center">
+        {{ (user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || user?.Privilege || 'U').charAt(0) }}
+      </div>
+
+      <div class="vr mx-2 opacity-25" style="height: 20px;"></div>
+
+      <button class="btn btn-logout-pro d-flex align-items-center gap-2" (click)="onLogout()">
+        <i class="bi bi-box-arrow-right"></i>
+        <span class="d-none d-md-inline">Déconnexion</span>
+      </button>
+    </div>
+  </div>
+</header>

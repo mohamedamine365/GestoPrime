@@ -1,0 +1,26 @@
+.header-logo-brand { height: 32px; width: auto; }
+.header-logo-sirh { height: 22px; opacity: 0.6; }
+
+.avatar-header {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    border-radius: 10px; /* Carré arrondi plus moderne que le cercle parfait */
+    font-weight: 700;
+}
+
+.btn-logout-pro {
+    color: #5a5c69;
+    border: none;
+    background: #f8f9fc;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-logout-pro:hover {
+    background: #eaecf4;
+    color: #e74a3b;
+}

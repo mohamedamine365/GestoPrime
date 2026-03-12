@@ -1,0 +1,59 @@
+/* --- Global & Layout --- */
+.page-bg { background-color: #f8fafc; min-height: 100vh; }
+.tracking-tight { letter-spacing: -0.02em; }
+.x-small { font-size: 0.7rem; }
+
+/* --- Bouton Ajouter --- */
+.btn-add-access {
+  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+.btn-add-access:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(78, 115, 223, 0.2); color: white; }
+
+/* --- Barre de recherche --- */
+.search-friendly {
+  display: flex; align-items: center; background: #f1f5f9; border-radius: 12px; height: 48px;
+}
+
+/* --- Table & Avatars --- */
+.thead-friendly th {
+  background-color: #f8fafc; color: #64748b; font-size: 0.7rem;
+  font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 1.2rem 1rem;
+}
+
+.avatar-sm {
+  width: 36px; height: 36px; background: #4e73df; color: white;
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-weight: bold; font-size: 0.9rem;
+}
+
+.badge-matricule {
+  background: #f1f5f9; color: #475569; padding: 4px 10px;
+  border-radius: 6px; font-family: monospace; font-weight: 700;
+}
+
+/* --- Badges de Privilèges --- */
+.badge-role {
+  font-size: 0.7rem; font-weight: 800; padding: 5px 12px;
+  border-radius: 50px; text-transform: uppercase; display: inline-block;
+}
+.Admin { background: #fee2e2; color: #dc2626; }
+.Gestion { background: #dcfce7; color: #16a34a; }
+.Filiale { background: #fef9c3; color: #ca8a04; }
+
+/* --- Bouton Supprimer --- */
+.btn-action-delete {
+  color: #94a3b8; background: transparent; border: none; font-size: 1.1rem;
+  transition: 0.2s; padding: 8px; border-radius: 8px;
+}
+.btn-action-delete:hover { color: #dc2626; background: #fee2e2; }
+
+/* --- Pagination --- */
+.pagination .page-link { border: none; background: #f1f5f9; color: #64748b; margin: 0 3px; border-radius: 8px; font-weight: 700; }
+.pagination .active .page-link { background-color: #4e73df; color: white; }

@@ -1,0 +1,44 @@
+/* Container principal occupant 100% de la hauteur de l'écran */
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Empêche le scroll sur le body entier */
+}
+
+/* Corps principal sous le header */
+.main-body {
+  display: flex;
+  flex: 1; /* Prend tout l'espace restant sous le header */
+  overflow: hidden; 
+}
+
+/* Sidebar fixe */
+app-sidebar {
+  width: 280px;
+  height: 100%;
+  flex-shrink: 0;
+  border-right: 1px solid #e3e6f0;
+  background-color: #ffffff;
+}
+
+/* Zone de contenu dynamique */
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* Force l'alignement vertical : Contenu en haut, Footer en bas */
+  overflow-y: auto; /* Seule cette zone peut scroller */
+  background-color: #f8f9fc;
+}
+
+/* Wrapper pour le contenu injecté par le router */
+.content-wrapper {
+  flex: 1 0 auto; /* "flex-grow: 1" force cette div à pousser le footer vers le bas */
+  padding: 1.5rem; /* Espacement Friendly autour des tableaux/stats */
+}
+
+/* Footer stable */
+app-footer {
+  flex-shrink: 0; /* Empêche le footer de se réduire si le contenu est long */
+  width: 100%;
+}

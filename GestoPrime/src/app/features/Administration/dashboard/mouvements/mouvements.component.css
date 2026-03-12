@@ -1,0 +1,49 @@
+/* --- Global & Layout --- */
+.page-bg { background-color: #f8fafc; min-height: 100vh; }
+.fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Boutons d'exportation --- */
+.btn-export {
+  padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 0.85rem;
+  border: none; transition: 0.2s; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.btn-export.excel { background-color: #107c10; }
+.btn-export.pdf { background-color: #e11d48; }
+.btn-export:hover { transform: translateY(-1px); filter: brightness(1.1); color: white; }
+
+/* --- Barre de recherche & Filtres --- */
+.search-friendly {
+  display: flex; align-items: center; background: #f1f5f9; border-radius: 12px; height: 45px;
+}
+.select-friendly { background: #f1f5f9; border-radius: 12px; height: 45px; font-size: 0.9rem; }
+
+/* --- Design de la Table --- */
+.thead-friendly th {
+  background-color: #f8fafc; color: #64748b; font-size: 0.7rem;
+  font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 1rem; border: none;
+}
+
+.badge-matricule {
+  background: #eff6ff; color: #3b82f6; padding: 5px 10px;
+  border-radius: 8px; font-weight: 700; font-family: 'Monaco', monospace; font-size: 0.8rem;
+}
+
+.site-pill {
+  background: #fff; border: 1px solid #e2e8f0; padding: 4px 10px;
+  border-radius: 20px; font-size: 0.75rem; color: #64748b; font-weight: 500;
+}
+
+/* --- Statuts --- */
+.status-badge {
+  padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;
+}
+.status-success { background-color: #dcfce7; color: #15803d; }
+.status-failed { background-color: #fee2e2; color: #b91c1c; }
+
+/* --- Pagination --- */
+.pagination .page-link {
+  border: none; background: #f1f5f9; color: #64748b; margin: 0 3px; border-radius: 8px;
+}
+.pagination .active .page-link { background-color: #4e73df; color: white; }

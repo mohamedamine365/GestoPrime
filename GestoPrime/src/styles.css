@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+/* Animations et Transitions */
+.transition-all { transition: all 0.3s ease; }
+
+.sub-item {
+  font-size: 0.85rem;
+  transition: padding 0.2s;
+  &:hover {
+    padding-left: 2rem !important;
+    background-color: rgba(0, 86, 179, 0.05);
+    color: #0056b3 !important;
+  }
+}
+
+.card {
+  transition: transform 0.2s;
+  &:hover { transform: translateY(-3px); }
+}
+
+/* Scrollbar Sidebar */
+.sidebar { overflow-y: auto; }
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/* Style pour la notification de succès */
+.success-snackbar {
+  background-color: #2e7d32 !important; /* Vert foncé pro */
+  color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Style pour la notification d'erreur (si besoin) */
+.error-snackbar {
+  background-color: #d32f2f !important; /* Rouge pro */
+  color: white !important;
+  border-radius: 8px !important;
+}
+
+/* Personnalisation du bouton "Fermer" dans la notification */
+.success-snackbar .mat-mdc-snack-bar-action button {
+  color: #c8e6c9 !important;
+  font-weight: bold;
+}

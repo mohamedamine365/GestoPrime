@@ -1,0 +1,60 @@
+<div class="container-fluid py-4 bg-light min-vh-100">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold text-dark m-0">Tableau de Bord Analytique</h4>
+    <button class="btn btn-primary btn-sm shadow-sm px-3" (click)="fetchStats()">
+      <i class="bi bi-arrow-clockwise me-1"></i> Actualiser
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div class="row g-4" *ngIf="!isLoading">
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-body p-4">
+          <h6 class="fw-bold text-muted small text-uppercase mb-4">Activité Récente (6j)</h6>
+          <apx-chart *ngIf="chartDay" [series]="chartDay.series" [chart]="chartDay.chart" [xaxis]="chartDay.xaxis" [colors]="chartDay.colors"></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-body p-4">
+          <h6 class="fw-bold text-muted small text-uppercase mb-4">Répartition par Site</h6>
+          <apx-chart *ngIf="chartSite" [series]="chartSite.series" [chart]="chartSite.chart" [labels]="chartSite.labels" [colors]="chartSite.colors" [legend]="chartSite.legend"></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-2">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h6 class="fw-bold text-dark mb-1">Tendances Annuelles</h6>
+              <p class="text-muted small m-0">Historique des flux de Janvier à Décembre</p>
+            </div>
+           <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">
+  Année : {{ lastYear }}
+</span>
+          </div>
+          
+          <apx-chart *ngIf="chartMonth"
+            [series]="chartMonth.series"
+            [chart]="chartMonth.chart"
+            [xaxis]="chartMonth.xaxis"
+            [stroke]="chartMonth.stroke"
+            [fill]="chartMonth.fill"
+            [markers]="chartMonth.markers"
+            [grid]="chartMonth.grid"
+            [colors]="chartMonth.colors"
+            [tooltip]="chartMonth.tooltip">
+          </apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
