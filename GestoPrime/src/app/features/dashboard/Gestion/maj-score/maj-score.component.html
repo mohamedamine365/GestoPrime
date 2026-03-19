@@ -1,0 +1,79 @@
+<div class="p-4 bg-light min-vh-100">
+  <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 rounded shadow-sm border-start border-info border-4">
+    <h4 class="mb-0 text-info fw-bold">
+      <i class="bi bi-star-fill me-2"></i>Mise à jour Scores PPM
+    </h4>
+    <div class="text-muted small fst-italic">Importation des données PPM Brut</div>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body py-4">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-auto">
+          <label class="fw-semibold text-secondary mb-0">Fichier Excel (.xlsx) :</label>
+        </div>
+        <div class="col-md-4">
+          <input type="file" (change)="onFileSelected($event)" accept=".xlsx" class="form-control" [disabled]="loading">
+        </div>
+        <div class="col-md-auto mt-2 mt-md-0">
+          <button class="btn btn-info text-white px-4 d-flex align-items-center fw-bold" (click)="onUpload()" [disabled]="!selectedFile || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            <i *ngIf="!loading" class="bi bi-cloud-arrow-up-fill me-2"></i>
+            {{ loading ? 'Enregistrement...' : 'Lancer l\'Import Score' }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0 border-0 shadow-sm small">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <strong>Erreur Serveur :</strong> {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-info text-white small text-uppercase">
+          <tr>
+            <th class="ps-3">Période</th>
+            <th>Matricule</th>
+            <th>Nom & Prénom</th>
+            <th>Service</th>
+            <th>Note PPM</th>
+            <th>Validité</th>
+            <th class="pe-3 text-end">Date Mvt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of scoresImportes" class="animate-row">
+            <td class="ps-3 text-muted">{{ s.annee }} / {{ s.mois | number:'2.0' }}</td>
+            <td class="fw-bold text-dark">{{ s.matricule }}</td>
+            <td>{{ s.noM_PREMON }}</td>
+            <td><span class="text-secondary small">{{ s.service }}</span></td>
+            <td>
+              <span class="badge bg-light text-info border border-info px-3">
+                {{ s.note }}
+              </span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="s.iS_NOTE === 'OUI' ? 'bg-success' : 'bg-secondary'">
+                {{ s.iS_NOTE }}
+              </span>
+            </td>
+            <td class="pe-3 text-end font-monospace small text-muted">
+              {{ s.date_Mvt | date:'dd/MM/yyyy HH:mm:ss' }}
+            </td>
+          </tr>
+
+          <tr *ngIf="scoresImportes.length === 0 && !loading">
+            <td colspan="7" class="text-center py-5 text-muted fst-italic">
+              <i class="bi bi-file-earmark-spreadsheet display-6 d-block mb-2 opacity-25"></i>
+              Aucun score importé. Sélectionnez le fichier PPM_BRUT pour commencer.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

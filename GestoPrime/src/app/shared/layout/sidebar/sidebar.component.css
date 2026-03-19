@@ -61,3 +61,18 @@
   background-color: #1cc88a; /* Vert pour indiquer "en ligne" */
   border-radius: 50%;
 }
+
+/* Ajout pour améliorer l'aspect visuel lors du survol */
+.sidebar-link i {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.sidebar-link:hover i {
+  transform: scale(1.1);
+}
+
+/* Style spécifique pour l'icône de score PPM quand actif */
+.sidebar-link.active i.bi-file-earmark-check-fill {
+  color: #1cc88a; /* Un vert "succès" pour le score */
+}

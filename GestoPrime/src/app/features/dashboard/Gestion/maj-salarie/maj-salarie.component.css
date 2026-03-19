@@ -1,0 +1,66 @@
+.main-container {
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+/* Header SIRH Style */
+.header-banner {
+  background-color: #0056b3;
+  border-bottom: 2px solid #004494;
+}
+
+.quote-text {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Import Action Section */
+.import-card {
+  border-left: 5px solid #0dcaf0;
+}
+
+.btn-import {
+  background-color: #b0c4de;
+  border: 1px solid #8e9db0;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.btn-import:hover:not(:disabled) {
+  background-color: #9db2cc;
+  transform: translateY(-1px);
+}
+
+/* Table Design */
+.table-container {
+  overflow: hidden;
+}
+
+.bg-table-header {
+  background-color: #cfe2ff !important; /* Couleur bleu clair entête */
+}
+
+.table thead th {
+  padding: 12px 8px;
+  font-weight: 600;
+  border-bottom: 2px solid #b6d4fe;
+}
+
+.table tbody td {
+  padding: 10px 8px;
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 5px 10px;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

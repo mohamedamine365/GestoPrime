@@ -24,4 +24,15 @@ export class SidebarComponent implements OnInit {
   toggleAdminMenu() {
     this.isAdminMenuOpen = !this.isAdminMenuOpen;
   }
+  // À ajouter dans votre classe
+isGestionMenuOpen: boolean = false;
+
+toggleGestionMenu() {
+  this.isGestionMenuOpen = !this.isGestionMenuOpen;
+  
+  // Optionnel : Fermer l'administration si la gestion est ouverte
+  if (this.isGestionMenuOpen) {
+    this.isAdminMenuOpen = false;
+  }
+}
 }

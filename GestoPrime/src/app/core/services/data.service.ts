@@ -6,7 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-private readonly apiUrl = 'https://localhost:7079/api/Access';
+
+  private readonly apiUrl = 'https://localhost:7079/api/Access';
+  private readonly importApiUrl = 'https://localhost:7079/api/Import';
+  
 
   constructor(private http: HttpClient) {}
 
@@ -24,4 +27,18 @@ private readonly apiUrl = 'https://localhost:7079/api/Access';
   deleteAccess(matricule: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${matricule}`);
   }
+
+
+
+importSalaries(formData: FormData) {
+    return this.http.post(`${this.importApiUrl}/import-salaries`, formData);
+  }
+
+importScore(formData: FormData) {
+  // Assurez-vous que l'URL correspond exactement à la route du contrôleur
+  return this.http.post(`${this.importApiUrl}/import-score`, formData);
+}
+
+
+
 }

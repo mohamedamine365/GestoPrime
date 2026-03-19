@@ -1,0 +1,72 @@
+<div class="p-4 bg-light min-vh-100">
+  <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 rounded shadow-sm border-start border-primary border-4">
+    <h4 class="mb-0 text-primary fw-bold">
+      <i class="bi bi-file-earmark-excel-fill me-2"></i>Mise à jour Salariés
+    </h4>
+    <div class="text-muted small">Importation de données mensuelles</div>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body py-4">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-auto">
+          <label class="fw-semibold text-secondary mb-0">Fichier Excel (.xlsx) :</label>
+        </div>
+        <div class="col-md-4">
+          <input type="file" (change)="onFileSelected($event)" accept=".xlsx" class="form-control" [disabled]="loading">
+        </div>
+        <div class="col-md-auto mt-2 mt-md-0">
+          <button class="btn btn-primary px-4 d-flex align-items-center" (click)="onUpload()" [disabled]="!selectedFile || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            <i *ngIf="!loading" class="bi bi-cloud-arrow-up-fill me-2"></i>
+            {{ loading ? 'Enregistrement...' : 'Lancer l\'Import' }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0 border-0 shadow-sm small">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <strong>Erreur Serveur :</strong> {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-primary text-white small text-uppercase">
+          <tr>
+            <th class="ps-3">Matricule</th>
+            <th>Nom & Prénom</th>
+            <th>Date Début</th>
+            <th>Date Fin</th>
+            <th>Site</th>
+            <th>Contrat</th>
+            <th class="pe-3">Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of salariesImportes" class="animate-row">
+            <td class="ps-3 fw-bold text-dark">{{ s.matricule }}</td>
+            <td>{{ s.noM_PREMON }}</td>
+            <td>{{ s.debut | date:'dd/MM/yyyy' }}</td>
+            <td>{{ s.date_FIN | date:'dd/MM/yyyy' }}</td>
+            <td>{{ s.libellE_SITE }}</td>
+            <td><span class="badge bg-light text-primary border border-primary">{{ s.typE_CONTRAT }}</span></td>
+            <td class="pe-3">
+              <span class="badge" [ngClass]="s.statut === 'Actif' ? 'bg-success' : 'bg-warning text-dark'">
+                {{ s.statut }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="salariesImportes.length === 0 && !loading">
+            <td colspan="7" class="text-center py-5 text-muted fst-italic">
+              <i class="bi bi-inbox display-6 d-block mb-2 opacity-25"></i>
+              Aucune donnée importée. Sélectionnez un fichier pour commencer.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+/* Animation des lignes comme dans Maj-Salarie */
+.animate-row {
+  animation: fadeInRow 0.5s ease-in-out both;
+}
+
+@keyframes fadeInRow {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Effet au survol des lignes */
+.table-hover tbody tr:hover {
+  background-color: rgba(13, 202, 240, 0.05); /* Teinte Info légère */
+  transition: background-color 0.2s;
+}
+
+/* Style des inputs */
+.form-control:focus {
+  border-color: #0dcaf0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+}
+
+/* Badge personnalisé pour les notes */
+.bg-primary-soft {
+  background-color: rgba(13, 202, 240, 0.1);
+}
+
+/* Header de table */
+thead th {
+    letter-spacing: 0.5px;
+    border: none !important;
+}

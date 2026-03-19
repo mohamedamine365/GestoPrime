@@ -13,6 +13,8 @@ namespace GestoPrime.Data
         public DbSet<JournalMouvement> Mouvements { get; set; }
         public DbSet<Salarie> Salaries { get; set; }
         public DbSet<UoGestionnaire> UoGestionnaires { get; set; }
+        public DbSet<MoisSalarie> MoisSalarie { get; set; }
+        public DbSet<MoisScoreBrut> MoisScoreBrut { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +24,8 @@ namespace GestoPrime.Data
             modelBuilder.Entity<JournalMouvement>().ToTable("T_SIRH_JOURNAL_MOUVEMENT");
             modelBuilder.Entity<Salarie>().ToTable("T_EXP_SALARIE");
             modelBuilder.Entity<UoGestionnaire>().ToTable("T_EXP_UO_GESTIONNAIRE\"");
+            modelBuilder.Entity<MoisSalarie>().ToTable("T_INT_MOIS_SALARIE");
+            modelBuilder.Entity<MoisScoreBrut>().ToTable("T_INT_MOIS_SCORE_PPM_BRUT");
 
 
 

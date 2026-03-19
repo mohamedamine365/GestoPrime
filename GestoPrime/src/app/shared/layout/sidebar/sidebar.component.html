@@ -35,5 +35,31 @@
       </nav>
     </div>
   </div>
+ <div class="menu-item-container mt-2">
+  <div 
+    class="nav-item-header d-flex align-items-center justify-content-between px-3 py-2 rounded-3 mb-1"
+    (click)="toggleGestionMenu()"
+    [class.header-active]="isGestionMenuOpen">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-person-gear me-2"></i>
+      <span class="fw-semibold">Gestion</span>
+    </div>
+    <i class="bi" [ngClass]="isGestionMenuOpen ? 'bi-chevron-up' : 'bi-chevron-down'" style="font-size: 0.8rem;"></i>
+  </div>
+
+  @if (isGestionMenuOpen) {
+    <nav class="nav flex-column gap-1 sub-menu">
+      <a routerLink="gestion/maj-salarie" routerLinkActive="active" class="sidebar-link">
+        <i class="bi bi-arrow-repeat"></i>
+        <span>Maj.Salarié</span>
+      </a>
+      
+      <a routerLink="gestion/maj-score" routerLinkActive="active" class="sidebar-link">
+        <i class="bi bi-file-earmark-check-fill"></i>
+        <span>Maj.Score.PPM</span>
+      </a>
+    </nav>
+  }
+</div>
 
 </aside>

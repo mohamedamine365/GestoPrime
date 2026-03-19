@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+
 namespace GestoPrime
 {
     public class Program
@@ -12,6 +13,7 @@ namespace GestoPrime
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+           
 
             // --- 1. ENREGISTREMENT DES SERVICES ---
 
