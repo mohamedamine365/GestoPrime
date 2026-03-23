@@ -3,26 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestoPrime.model
 {
-    [Table("T_EXP_UO_GESTIONNAIRE")]
+    // On pointe vers la table qui contient réellement les colonnes de droits
+    [Table("T_PARAM_UNITE_GESTIONNAIRE")]
     public class UoGestionnaire
     {
-       
-            [Key]
-            public string CODE_UO { get; set; } = string.Empty;
-
-            public string? LIBELLE_UO { get; set; }
-
-            [Column("UO_GESTIONNAIRE")]
-            public string? NomGestionnaire { get; set; }
-
-            // Liens avec la structure géographique
-            public string? COD_SIT_CENT { get; set; }
-            public string? LIB_LON_SIT_CENT { get; set; }
-            public string? COD_ETAB { get; set; }
-            public string? LIB_ETAB { get; set; }
-
-            [Column("CODE_MINIPOLE")]
-            public string? CodeMinipole { get; set; }
-        
+        [Key]
+        public int id { get; set; } // Clé primaire de la table de paramétrage
+        public string Unite_Gestionnaire { get; set; } = string.Empty;
+        public bool Droit_Hygiene { get; set; }
+        public bool Droit_Prod { get; set; }
+        public string? MAT_RESP { get; set; }
+        public string? NOM_PRENOM_RESP { get; set; }
+        public string? Utilisateur { get; set; }
+        public DateTime? Date_Mvt { get; set; }
     }
 }

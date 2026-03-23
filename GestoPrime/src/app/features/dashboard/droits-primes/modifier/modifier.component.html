@@ -1,0 +1,54 @@
+<div class="modern-dialog">
+  <div class="dialog-header-clean">
+    <div class="icon-box">
+      <i class="bi bi-person-fill-gear"></i>
+    </div>
+    <h4 class="dialog-title">Modifier l'Accès</h4>
+  </div>
+
+  <div class="dialog-body">
+    <form [formGroup]="droitsForm">
+      
+      <div class="input-field">
+        <label>Unité Gestionnaire</label>
+        <input type="text" formControlName="unite_Gestionnaire" readonly class="readonly-field">
+      </div>
+
+      <div class="input-field">
+        <label>Matricule</label>
+        <input type="text" formControlName="mat_Resp" placeholder="Ex: 07227941">
+      </div>
+
+      <div class="input-field">
+        <label>Nom & Prénom</label>
+        <input type="text" formControlName="nom_Prenom_Resp" readonly class="readonly-field">
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6">
+          <div class="input-field">
+            <label>Droit Hygiène</label>
+            <select formControlName="droit_Hygiene" class="modern-select">
+              <option [ngValue]="true">true</option>
+              <option [ngValue]="false">false</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="input-field">
+            <label>Droit Productivité</label>
+            <select formControlName="droit_Prod" class="modern-select">
+              <option [ngValue]="true">true</option>
+              <option [ngValue]="false">false</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn-annuler" (click)="dialogRef.close()">Annuler</button>
+        <button type="button" class="btn-confirmer" (click)="onSave()">Confirmer les modifications</button>
+      </div>
+    </form>
+  </div>
+</div>

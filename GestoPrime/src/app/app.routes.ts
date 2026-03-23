@@ -10,7 +10,8 @@ import { AjoutComponent } from './features/dashboard/Administration/parammetres-
 import { LoginComponent } from './features/login/login.component';
 import { MajSalarieComponent } from './features/dashboard/Gestion/maj-salarie/maj-salarie.component';
 import { MajScoreComponent } from './features/dashboard/Gestion/maj-score/maj-score.component';
-// Importez le nouveau composant ici
+import { DroitsPrimesComponent } from './features/dashboard/droits-primes/droits-primes.component';
+
 
 export const routes: Routes = [
   
@@ -39,7 +40,8 @@ export const routes: Routes = [
         path: 'gestion', 
         children: [
           { path: 'maj-salarie', component: MajSalarieComponent },
-          { path: 'maj-score', component: MajScoreComponent }
+          { path: 'maj-score', component: MajScoreComponent },
+          { path: 'droits-primes', component: DroitsPrimesComponent }
         ]
       }
     ]
