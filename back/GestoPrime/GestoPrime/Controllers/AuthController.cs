@@ -64,7 +64,7 @@ namespace GestoPrime.Controllers
                 new Claim("Matricule", user.Matricule)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? "Cle_Securite_Par_Defaut_32_Chars"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? "Cy5TxHo/4ExBMocmPcztoJF3HjfpZjxrT4F3Y9aTdsNkR1w6qun/3PajKbg1YXHYeRE6e8lYwjeOrhfzWYe5wCA=="));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
