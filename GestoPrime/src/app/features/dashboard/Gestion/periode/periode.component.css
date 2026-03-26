@@ -1,0 +1,40 @@
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(45deg, #6ea1fa, #6ea1fa) !important;
+    padding: 1.2rem;
+}
+
+.instruction-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.form-select:focus {
+    border-color: #71b5fc;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.1);
+}
+
+.btn-primary {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    height: 38px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.input-group-text {
+    border-right: none;
+}
+
+.form-select {
+    border-left: none;
+}

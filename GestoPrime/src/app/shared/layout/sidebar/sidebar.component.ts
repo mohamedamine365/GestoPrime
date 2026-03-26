@@ -35,4 +35,14 @@ toggleGestionMenu() {
     this.isAdminMenuOpen = false;
   }
 }
+isConsultationMenuOpen: boolean = false;
+
+toggleConsultationMenu() {
+  this.isConsultationMenuOpen = !this.isConsultationMenuOpen;
+  // Optionnel : fermer les autres menus
+  if (this.isConsultationMenuOpen) {
+    this.isAdminMenuOpen = false;
+    this.isGestionMenuOpen = false;
+  }
+}
 }

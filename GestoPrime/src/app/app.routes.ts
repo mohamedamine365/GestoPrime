@@ -11,6 +11,10 @@ import { LoginComponent } from './features/login/login.component';
 import { MajSalarieComponent } from './features/dashboard/Gestion/maj-salarie/maj-salarie.component';
 import { MajScoreComponent } from './features/dashboard/Gestion/maj-score/maj-score.component';
 import { DroitsPrimesComponent } from './features/dashboard/droits-primes/droits-primes.component';
+import { TauxPrimesComponent } from './features/dashboard/Gestion/taux-primes/taux-primes.component';
+import { PeriodeComponent } from './features/dashboard/Gestion/periode/periode.component';
+import { MajParamComponent } from './features/dashboard/Gestion/maj-param/maj-param.component';
+import { PointageComponent } from './features/dashboard/Consultation/pointage/pointage.component';
 
 
 export const routes: Routes = [
@@ -41,11 +45,23 @@ export const routes: Routes = [
         children: [
           { path: 'maj-salarie', component: MajSalarieComponent },
           { path: 'maj-score', component: MajScoreComponent },
-          { path: 'droits-primes', component: DroitsPrimesComponent }
+          { path: 'droits-primes', component: DroitsPrimesComponent },
+          { path: 'taux-primes', component: TauxPrimesComponent },
+          { path: 'lancer-periode', component: PeriodeComponent },
+          { path: 'maj-param', component: MajParamComponent }
+        ]
+      },
+      { 
+        path: 'consultation', 
+        children: [
+          { path: 'pointage', component: PointageComponent }
         ]
       }
     ]
   },
+      
+    
+  
   { path: 'login', canActivate: [loginGuard], component: LoginComponent},
 
   { path: '**', redirectTo: 'dashboard' }

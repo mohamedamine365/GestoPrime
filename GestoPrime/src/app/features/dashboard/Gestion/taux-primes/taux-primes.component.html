@@ -1,0 +1,58 @@
+<div class="page-container animate-fade-in">
+  <header class="header-section d-flex justify-content-between align-items-center">
+    <div class="title-meta">
+      <h2 class="main-title">Gestion des Taux Primes</h2>
+      <p class="sub-title">Visualisez et modifiez les accès par unité de gestion.</p>
+    </div>
+
+    <div class="action-bar">
+      <div class="search-container shadow-sm">
+        <i class="bi bi-search icon-search"></i>
+        <input type="text" class="search-input" placeholder="Rechercher une unité..." 
+               [(ngModel)]="searchTerm" (input)="loadData()">
+        <span class="dossier-count"><b>{{ dataSource.length }}</b> Dossiers</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="data-card shadow-sm">
+    <div class="table-header-grid d-none d-md-grid">
+      <div class="col-unit">UNITÉ GESTIONNAIRE</div>
+      <div class="col-center">JOURS OUV.</div>
+      <div class="col-center">DROIT HYGIÈNE</div>
+      <div class="col-center">DROIT PRODUCTIVITÉ</div>
+      <div class="col-action">ACTIONS</div>
+    </div>
+
+    <div class="table-row-grid align-items-center" *ngFor="let item of dataSource">
+      <div class="col-unit">
+        <div class="unit-name">{{ item.unite_Gestionnaire }}</div>
+        <div class="unit-id">ID: #{{ item.id }} | Période: {{ item.periode }}</div>
+      </div>
+
+      <div class="col-center">
+        <span class="days-text">{{ item.nbrJourOuv }}</span>
+      </div>
+
+      <div class="col-center">
+        <span class="status-badge" [ngClass]="item.coefHygiene > 0 ? 'bg-success-soft' : 'bg-danger-soft'">
+          <i class="bi" [ngClass]="item.coefHygiene > 0 ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+          {{ item.coefHygiene > 0 ? 'active (' + item.coefHygiene + ')' : 'inactive' }}
+        </span>
+      </div>
+
+      <div class="col-center">
+        <span class="status-badge" [ngClass]="item.coefProd > 0 ? 'bg-success-soft' : 'bg-danger-soft'">
+          <i class="bi" [ngClass]="item.coefProd > 0 ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+          {{ item.coefProd > 0 ? 'active (' + item.coefProd + ')' : 'inactive' }}
+        </span>
+      </div>
+
+      <div class="col-action">
+        <button class="btn-edit-square" (click)="openModifier(item)">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

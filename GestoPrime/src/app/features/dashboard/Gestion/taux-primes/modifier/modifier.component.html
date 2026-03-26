@@ -1,0 +1,42 @@
+<div class="saas-container">
+  <div class="saas-header">
+    <div class="icon-box">
+      <i class="bi bi-pencil-square"></i>
+    </div>
+    <div class="header-text">
+      <h3 class="saas-title">Modifier l'Accès</h3>
+      <p class="saas-subtitle">Mise à jour des paramètres pour {{ data.unite_Gestionnaire }}</p>
+    </div>
+  </div>
+
+  <div class="saas-body">
+    <div class="field-group">
+      <label>Unité Gestionnaire</label>
+      <div class="input-readonly">
+        <i class="bi bi-building"></i>
+        <span>{{ data.unite_Gestionnaire }}</span>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Nombre Jours Ouvrables</label>
+      <input type="number" class="saas-input main-field" [(ngModel)]="data.nbrJourOuv">
+    </div>
+
+    <div class="row g-3">
+      <div class="col-6">
+        <label class="label-small">Droit Hygiène</label>
+        <input type="number" step="0.1" class="saas-input" [(ngModel)]="data.coefHygiene">
+      </div>
+      <div class="col-6">
+        <label class="label-small">Droit Productivité</label>
+        <input type="number" step="0.1" class="saas-input" [(ngModel)]="data.coefProd">
+      </div>
+    </div>
+
+    <div class="saas-footer">
+      <button class="btn-saas-cancel" (click)="onCancel()">Annuler</button>
+      <button class="btn-saas-submit" (click)="onSave()">Confirmer les modifications</button>
+    </div>
+  </div>
+</div>

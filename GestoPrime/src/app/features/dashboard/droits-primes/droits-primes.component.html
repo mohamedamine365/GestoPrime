@@ -51,13 +51,13 @@
             <td class="text-center">
               <span class="status-indicator" [ngClass]="item.droit_Hygiene ? 'active' : 'inactive'">
                 <i class="bi" [ngClass]="item.droit_Hygiene ? 'bi-check-circle-fill' : 'bi-dash-circle-fill'"></i>
-                {{ item.droit_Hygiene ? 'Activé' : 'Inactif' }}
+                {{ item.droit_Hygiene ? 'true' : 'false' }}
               </span>
             </td>
             <td class="text-center">
               <span class="status-indicator" [ngClass]="item.droit_Prod ? 'active' : 'inactive'">
                 <i class="bi" [ngClass]="item.droit_Prod ? 'bi-check-circle-fill' : 'bi-dash-circle-fill'"></i>
-                {{ item.droit_Prod ? 'Activé' : 'Inactif' }}
+                {{ item.droit_Prod ? 'true' : 'false' }}
               </span>
             </td>
             <td class="text-end pe-4">

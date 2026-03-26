@@ -1,0 +1,40 @@
+.saas-container { background: white; border-radius: 20px; overflow: hidden; max-width: 450px; }
+
+.saas-header { padding: 25px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
+
+.icon-box {
+  width: 45px; height: 45px; background: #eff6ff; color: #3b82f6;
+  border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+
+.header-text { margin-left: 15px; }
+.saas-title { margin: 0; font-size: 1.2rem; font-weight: 700; color: #1e293b; }
+.saas-subtitle { margin: 0; font-size: 0.8rem; color: #64748b; }
+
+.saas-body { padding: 25px; }
+
+.field-group { margin-bottom: 20px; }
+.field-group label, .label-small { 
+  display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 8px;
+}
+
+.saas-input {
+  width: 100%; padding: 12px 15px; border-radius: 12px;
+  border: 1px solid #e2e8f0; font-size: 0.95rem; transition: 0.2s;
+}
+.saas-input:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+
+.input-readonly {
+  background: #f8fafc; padding: 12px 15px; border-radius: 12px;
+  color: #94a3b8; font-size: 0.95rem; border: 1px solid #f1f5f9;
+}
+
+.saas-footer { margin-top: 30px; display: flex; justify-content: end; gap: 15px; }
+
+.btn-saas-submit {
+  background: #e2e8f0; color: #475569; border: none; padding: 12px 20px;
+  border-radius: 12px; font-weight: 700; transition: 0.3s;
+}
+.btn-saas-submit:hover { background: #3b82f6; color: white; }
+
+.btn-saas-cancel { background: none; border: none; color: #1e293b; font-weight: 600; }

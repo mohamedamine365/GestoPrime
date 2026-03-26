@@ -1,0 +1,70 @@
+<div class="page-container animate-fade-in">
+  
+  <header class="header-section d-flex justify-content-between align-items-center mb-4">
+    <div class="title-meta">
+      <h2 class="fw-bold text-dark mb-1">Consultation Pointage</h2>
+      <p class="text-muted small mb-0">Visualisation des présences extraites du SIRH.</p>
+    </div>
+
+    <div class="action-bar">
+      <div class="search-wrapper shadow-sm">
+        <i class="bi bi-search ms-3 text-muted"></i>
+        <input type="text" 
+               class="search-input" 
+               placeholder="Rechercher une unité ou matricule..." 
+               [(ngModel)]="searchTerm" 
+               (input)="loadData()"> <span class="results-badge" *ngIf="dataSource.length > 0">
+          {{ dataSource.length }} dossiers
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="data-list-card shadow-sm">
+    <div class="list-head d-none d-md-grid">
+      <div class="col-main ps-4">SALARIÉ / MATRICULE</div>
+      <div class="col-data text-center">UNITÉ GESTIONNAIRE</div>
+      <div class="col-data text-center">J. TRAVAILLÉS</div>
+      <div class="col-data text-center">J. CONGÉS</div>
+      <div class="col-data text-center">COEF PRES.</div>
+    </div>
+
+    <ng-container *ngIf="!loading">
+      <div class="list-row d-grid align-items-center" *ngFor="let item of dataSource">
+        <div class="col-main ps-4">
+          <div class="fw-bold text-dark">{{ item.nmpres }}</div>
+          <div class="text-muted small">Mat: {{ item.matcle }} | {{ item.periode }}</div>
+        </div>
+
+        <div class="col-data text-center">
+          <span class="unit-tag">{{ item.unitE_GESTIONNAIRE }}</span>
+        </div>
+
+        <div class="col-data text-center fw-bold text-primary">
+          {{ item.nombre_Jour_Travaille }}
+        </div> 
+       
+        <div class="col-data text-center text-danger">
+          {{ item.nombre_Jour_Conge }}
+        </div>
+
+        <div class="col-data text-center">
+          <span class="badge-coef" 
+                [ngClass]="item.cof_PRES >= 1 ? 'bg-success-soft' : 'bg-warning-soft'">
+            {{ item.cof_PRES | number:'1.1-2' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="p-5 text-center" *ngIf="dataSource.length === 0">
+        <i class="bi bi-search display-4 text-muted opacity-25"></i>
+        <p class="mt-3 text-muted">Aucun résultat pour "{{ searchTerm }}"</p>
+      </div>
+    </ng-container>
+
+    <div class="p-5 text-center" *ngIf="loading">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2 text-muted">Chargement...</p>
+    </div>
+  </div>
+</div>

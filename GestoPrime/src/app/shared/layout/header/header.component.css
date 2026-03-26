@@ -1,26 +1,74 @@
-.header-logo-brand { height: 32px; width: auto; }
-.header-logo-sirh { height: 22px; opacity: 0.6; }
-
-.avatar-header {
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
-    border-radius: 10px; /* Carré arrondi plus moderne que le cercle parfait */
-    font-weight: 700;
+/* --- Conteneur Header --- */
+.saas-header {
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid #f1f5f9;
+  height: 70px;
+  display: flex;
+  align-items: center;
 }
 
-.btn-logout-pro {
-    color: #5a5c69;
-    border: none;
-    background: #f8f9fc;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+/* --- Organisation des Logos --- */
+.brand-main img {
+  height: 35px; /* Logo principal plus grand */
+  width: auto;
 }
 
-.btn-logout-pro:hover {
-    background: #eaecf4;
-    color: #e74a3b;
+.brand-sirh img {
+  height: 22px; /* Logo secondaire plus petit et discret */
+  width: auto;
+  filter: grayscale(1); /* Optionnel : pour un look plus "entreprise" */
+}
+
+.brand-divider {
+  width: 1px;
+  height: 28px;
+  background-color: #e2e8f0;
+}
+
+/* --- Zone Profil --- */
+.label-session {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: -2px;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* --- Avatar (Le "Square" de ton image) --- */
+.saas-avatar {
+  width: 38px;
+  height: 38px;
+  background: #3b82f6; /* Bleu vibrant */
+  color: white;
+  border-radius: 10px; /* Moins rond, plus moderne */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* --- Bouton Déconnexion --- */
+.btn-saas-logout {
+  border: 1px solid #f1f5f9;
+  background: #f8fafc;
+  color: #64748b;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-saas-logout:hover {
+  background: #fff1f2;
+  color: #e11d48;
+  border-color: #ffe4e6;
 }

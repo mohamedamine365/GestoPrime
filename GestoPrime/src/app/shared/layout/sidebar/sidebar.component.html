@@ -35,7 +35,8 @@
       </nav>
     </div>
   </div>
- <div class="menu-item-container mt-2">
+<div class="menu-item-container mt-2">
+  
   <div 
     class="nav-item-header d-flex align-items-center justify-content-between px-3 py-2 rounded-3 mb-1"
     (click)="toggleGestionMenu()"
@@ -49,6 +50,11 @@
 
   @if (isGestionMenuOpen) {
     <nav class="nav flex-column gap-1 sub-menu">
+      <a routerLink="gestion/lancer-periode" routerLinkActive="active" class="sidebar-link">
+        <i class="bi bi-rocket-takeoff"></i>
+        <span>Lancer Période</span>
+      </a>
+
       <a routerLink="gestion/maj-salarie" routerLinkActive="active" class="sidebar-link">
         <i class="bi bi-arrow-repeat"></i>
         <span>Maj.Salarié</span>
@@ -58,12 +64,43 @@
         <i class="bi bi-file-earmark-check-fill"></i>
         <span>Maj.Score.PPM</span>
       </a>
+
       <a routerLink="gestion/droits-primes" routerLinkActive="active" class="sidebar-link">
         <i class="bi bi-shield-lock-fill"></i>
         <span>Droits Primes</span>
       </a>
+
+      <a routerLink="gestion/taux-primes" routerLinkActive="active" class="sidebar-link">
+        <i class="bi bi-percent"></i>
+        <span>Taux Primes</span>
+      </a>
+      <a routerLink="gestion/maj-param" routerLinkActive="active" class="sidebar-link">
+        <i class="bi bi-gear-wide-connected"></i>
+        <span>Maj.Paramètre</span>
+      </a>
     </nav>
   }
 </div>
+<div class="menu-item-container mt-2">
+  <div 
+    class="nav-item-header d-flex align-items-center justify-content-between px-3 py-2 rounded-3 mb-1"
+    (click)="toggleConsultationMenu()"
+    [class.header-active]="isConsultationMenuOpen">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-eye me-2"></i>
+      <span class="fw-semibold">Consultation</span>
+    </div>
+    <i class="bi" [ngClass]="isConsultationMenuOpen ? 'bi-chevron-up' : 'bi-chevron-down'" style="font-size: 0.8rem;"></i>
+  </div>
+
+  <nav class="nav flex-column gap-1 sub-menu" *ngIf="isConsultationMenuOpen">
+    <a routerLink="consultation/pointage" routerLinkActive="active" class="sidebar-link">
+      <i class="bi bi-calendar-check"></i>
+      <span>Pointage Salariés</span>
+    </a>
+    
+    </nav>
+</div>
+
 
 </aside>

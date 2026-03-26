@@ -8,20 +8,22 @@ namespace GestoPrime.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        // Déclaration des tables
+        // Déclaration des tables physiques
         public DbSet<User> Users { get; set; }
         public DbSet<UserAuth> UserAuths { get; set; }
         public DbSet<JournalMouvement> Mouvements { get; set; }
         public DbSet<Salarie> Salaries { get; set; }
 
-        // Cette entité est maintenant mappée sur la table de paramétrage pour permettre les updates
+        // Table de paramétrage par défaut (Droits par UO)
         public DbSet<UoGestionnaire> UoGestionnaires { get; set; }
 
         public DbSet<MoisSalarie> MoisSalarie { get; set; }
         public DbSet<MoisScoreBrut> MoisScoreBrut { get; set; }
 
-        // Déclaration de la vue (pour la consultation uniquement)
-        public DbSet<model.DroitsPrimeDto> DroitsPrimes { get; set; }
+        // Table des taux par période (Tours, Coefs par mois)
+        public DbSet<TauxPrime> TauxPrimes { get; set; }
+        public DbSet<Periode> Periodes { get; set; }
+        public DbSet<Pointage> V_CONSULTATION_POINTAGE { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,27 +37,41 @@ namespace GestoPrime.Data
             modelBuilder.Entity<MoisSalarie>().ToTable("T_INT_MOIS_SALARIE");
             modelBuilder.Entity<MoisScoreBrut>().ToTable("T_INT_MOIS_SCORE_PPM_BRUT");
 
-            // --- CONFIGURATION CRITIQUE POUR LA MISE À JOUR ---
-            // On mappe UoGestionnaire sur la table de paramétrage qui possède les colonnes de droits
+            // --- CONFIGURATION DE LA TABLE DE PARAMÉTRAGE UO ---
             modelBuilder.Entity<UoGestionnaire>(entity =>
             {
-                entity.ToTable("T_PARAM_UNITE_GESTIONNAIRE"); //
+                entity.ToTable("T_PARAM_UNITE_GESTIONNAIRE");
+                entity.HasKey(e => e.id);
 
-                // Définition de la clé primaire 'id' vue dans votre SQL
-                entity.HasKey(e => e.id); //
-
-                // Mapping explicite des colonnes pour correspondre à la table physique
-                entity.Property(e => e.Unite_Gestionnaire).HasColumnName("Unite_Gestionnaire"); //
-                entity.Property(e => e.Droit_Hygiene).HasColumnName("Droit_Hygiene"); //
-                entity.Property(e => e.Droit_Prod).HasColumnName("Droit_Prod"); //
+                entity.Property(e => e.Unite_Gestionnaire).HasColumnName("Unite_Gestionnaire");
+                entity.Property(e => e.Droit_Hygiene).HasColumnName("Droit_Hygiene");
+                entity.Property(e => e.Droit_Prod).HasColumnName("Droit_Prod");
             });
 
-            // Configuration de la vue SQL (Keyless / Read-only)
-            modelBuilder.Entity<model.DroitsPrimeDto>(entity =>
+            // --- CONFIGURATION DES TAUX PAR PÉRIODE ---
+            modelBuilder.Entity<TauxPrime>(entity =>
             {
-                entity.HasNoKey();
-                entity.ToView("V_CONSULTATION_DROITS_PRIMES"); //
+                entity.ToTable("T_INT_PARAM_MOIS_UNITE_GESTIONNAIRE");
+                entity.HasKey(e => e.id);
+
+                // Mapping des colonnes numériques
+                entity.Property(e => e.Cof_HYGIENE).HasColumnType("float");
+                entity.Property(e => e.Cof_PROD).HasColumnType("float");
+                entity.Property(e => e.NBR_JOUR_OUV).HasColumnName("NBR_JOUR_OUV");
             });
-        }
+
+            modelBuilder.Entity<Periode>(entity =>
+            {
+                entity.ToTable("T_INT_PERIODE");
+                entity.Property(e => e.Periode_Val).HasColumnName("Periode"); // Mappe Periode_Val vers Periode
+            });
+           
+            modelBuilder.Entity<Pointage>(entity =>
+            {
+                entity.HasNoKey(); // INDISPENSABLE pour une vue
+                entity.ToView("V_CONSULTATION_POINTAGE"); // Vérifie bien le nom exact ici
+            });
+        
+    }
     }
 }

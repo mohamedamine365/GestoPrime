@@ -1,0 +1,55 @@
+/* Conteneur principal qui occupe toute la hauteur disponible */
+.sync-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  padding: 20px;
+}
+
+/* Carte centrale */
+.sync-card {
+  background: #ffffff;
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 550px;
+  width: 100%;
+  border: 1px solid #f0f0f0;
+}
+
+/* Le bouton noir stylisé comme sur l'image */
+.btn-sync {
+  background-color: #212529; /* Noir profond */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 40px;
+  width: 100%;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-sync:hover:not(:disabled) {
+  background-color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-sync:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Espacement des lettres pour le bouton */
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+/* Animation douce pour le spinner */
+.spinner-border-sm {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-width: 0.15em;
+}
