@@ -17,6 +17,7 @@ export class DataService {
   private readonly majParamApiUrl = `${this.baseUrl}/Majparametres`;
   private readonly PointageApiUrl = `${this.baseUrl}/Pointage`;
   private readonly salarieApiUrl = `${this.baseUrl}/Salarie`;
+  private readonly ctrlPrimeapiUrl = `${this.baseUrl}/ControlePlafondPrime`;
 
   constructor(private http: HttpClient) {}
 
@@ -126,5 +127,26 @@ export class DataService {
       })
     );
   }
+getAll(recherche?: string): Observable<any> {
+    let params = new HttpParams();
+    
+    // On utilise le nom 'recherche' pour correspondre exactement 
+    // au paramètre attendu par le contrôleur C#
+    if (recherche && recherche.trim() !== '') {
+      params = params.set('recherche', recherche);
+    }
 
+    return this.http.get<any>(this.ctrlPrimeapiUrl, { params }).pipe(
+      map(response => {
+        // Gestion robuste du format de retour (Tableau direct ou objet $values)
+        if (Array.isArray(response)) return response;
+        if (response && response.$values) return response.$values;
+        return response || [];
+      }),
+      catchError(err => {
+        console.error('Erreur ControlePlafondPrime:', err);
+        return throwError(() => err);
+      })
+    );
+  }
 }

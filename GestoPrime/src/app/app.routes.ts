@@ -10,12 +10,14 @@ import { AjoutComponent } from './features/dashboard/Administration/parammetres-
 import { LoginComponent } from './features/login/login.component';
 import { MajSalarieComponent } from './features/dashboard/Gestion/maj-salarie/maj-salarie.component';
 import { MajScoreComponent } from './features/dashboard/Gestion/maj-score/maj-score.component';
-import { DroitsPrimesComponent } from './features/dashboard/droits-primes/droits-primes.component';
+
 import { TauxPrimesComponent } from './features/dashboard/Gestion/taux-primes/taux-primes.component';
 import { PeriodeComponent } from './features/dashboard/Gestion/periode/periode.component';
 import { MajParamComponent } from './features/dashboard/Gestion/maj-param/maj-param.component';
 import { PointageComponent } from './features/dashboard/Consultation/pointage/pointage.component';
 import { ConsultationSalarieComponent } from './features/dashboard/Consultation/consultation-salarie/consultation-salarie.component';
+import { DroitsPrimesComponent } from './features/dashboard/Gestion/droits-primes/droits-primes.component';
+import { PlafondPrimeRendementComponent } from './features/dashboard/Controle/plafond-prime-rendement/plafond-prime-rendement/plafond-prime-rendement.component';
 
 
 export const routes: Routes = [
@@ -53,16 +55,22 @@ export const routes: Routes = [
         ]
       },
       { 
+        path: 'controle', 
+        children: [
+          { path: 'plafond-prime', component: PlafondPrimeRendementComponent }
+        ]
+      },
+      { 
         path: 'consultation', 
         children: [
           { path: 'pointage', component: PointageComponent },
           { path: 'salarie', component: ConsultationSalarieComponent }
         ]
       }
+      
     ]
   },
-      
-    
+  
   
   { path: 'login', canActivate: [loginGuard], component: LoginComponent},
 

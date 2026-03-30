@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DataService } from '../../../core/services/data.service';
-import { ModifierComponent } from './modifier/modifier.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DataService } from '../../../../core/services/data.service';
+import { ModifierComponent } from './modifier/modifier.component';
+
 
 @Component({
   selector: 'app-droits-primes',
   standalone: true,
   templateUrl: './droits-primes.component.html',
   styleUrls: ['./droits-primes.component.css'],
-  imports: [CommonModule, FormsModule, MatDialogModule, ModifierComponent],
+  imports: [CommonModule, FormsModule, MatDialogModule,ModifierComponent],
 })
 export class DroitsPrimesComponent implements OnInit {
   dataSource: any[] = [];

@@ -1,0 +1,94 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 animate-in">
+    <div>
+      <h4 class="fw-bold text-dark mb-1">Contrôle Plafond Prime</h4>
+      <p class="text-muted small mb-0">Recherche globale par Nom, Matricule ou Unité</p>
+    </div>
+
+    <div class="d-flex gap-3 align-items-center">
+      <div class="search-container shadow-sm">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" 
+               [(ngModel)]="rechercheGlobale" 
+               (input)="chargerDonnees()" 
+               placeholder="Rechercher un collaborateur..." 
+               class="form-control search-input">
+        <button *ngIf="rechercheGlobale" (click)="initialiser()" class="btn-clear">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <span class="badge rounded-pill bg-primary-soft text-primary p-2 px-3">
+        {{ dataList.length }} Résultats
+      </span>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden animate-in">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light text-uppercase text-muted small fw-bold">
+          <tr>
+            <th class="ps-4">Période</th>
+            <th>Unité</th>
+            <th>Collaborateur</th>
+            <th>Responsable</th>
+            <th>Date Début</th>
+            <th>Date Fin</th>
+            <th class="text-center">Rubrique</th>
+            <th class="text-end pe-4">Montant</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="8" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+              <span class="ms-2 text-muted">Chargement des données...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of dataList" class="animate-in">
+            <td class="ps-4 text-secondary fw-medium">{{ item.periode }}</td>
+            <td>
+              <span class="text-truncate d-inline-block" style="max-width: 180px;" [title]="item.uniteGestionnaire">
+                {{ item.uniteGestionnaire || '---' }}
+              </span>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="avatar-sm me-2">
+                  {{ item.nomPrenom ? item.nomPrenom.charAt(0) : '?' }}
+                </div>
+                <div>
+                  <div class="fw-bold text-dark mb-0">{{ item.nomPrenom }}</div>
+                  <div class="mini-text">Mat: <span class="text-primary fw-medium">{{ item.matricule }}</span></div>
+                </div>
+              </div>
+            </td>
+            <td><span class="text-muted small">{{ item.nomPrenomResp || '---' }}</span></td>
+            
+            <td class="text-muted small">{{ item.dateDebut ? (item.dateDebut | date:'dd/MM/yyyy') : '---' }}</td>
+            <td class="text-muted small">{{ item.dateFin ? (item.dateFin | date:'dd/MM/yyyy') : '---' }}</td>
+            
+            <td class="text-center">
+              <span class="badge bg-light text-dark border">{{ item.codeRubrique || '-' }}</span>
+            </td>
+            <td class="text-end pe-4">
+              <span class="fw-bold fs-6" [class.text-danger]="item.montant > 0">
+                {{ (item.montant || 0) | number:'1.3-3' }}
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && dataList.length === 0">
+            <td colspan="8" class="text-center py-5">
+              <i class="bi bi-person-x text-muted opacity-50 fs-1"></i>
+              <p class="text-muted mt-2">Aucun collaborateur trouvé pour "{{ rechercheGlobale }}"</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -11,38 +11,57 @@ import { AuthenticationService } from '../../../core/services/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
- isAdminMenuOpen: boolean = false; 
+  // États des menus
+  isAdminMenuOpen: boolean = false;
+  isGestionMenuOpen: boolean = false;
+  isConsultationMenuOpen: boolean = false;
+  isControleMenuOpen: boolean = false; // Ajouté
+
   user: any = null;
 
   constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.user = this.authService.getDataFromToken();
-    // Votre token contient actuellement le matricule "14762473" dans le champ name
   }
+
+  // --- Gestion des Toggles ---
 
   toggleAdminMenu() {
     this.isAdminMenuOpen = !this.isAdminMenuOpen;
+    if (this.isAdminMenuOpen) {
+      this.closeOthers('admin');
+    }
   }
-  // À ajouter dans votre classe
-isGestionMenuOpen: boolean = false;
 
-toggleGestionMenu() {
-  this.isGestionMenuOpen = !this.isGestionMenuOpen;
-  
-  // Optionnel : Fermer l'administration si la gestion est ouverte
-  if (this.isGestionMenuOpen) {
-    this.isAdminMenuOpen = false;
+  toggleGestionMenu() {
+    this.isGestionMenuOpen = !this.isGestionMenuOpen;
+    if (this.isGestionMenuOpen) {
+      this.closeOthers('gestion');
+    }
   }
-}
-isConsultationMenuOpen: boolean = false;
 
-toggleConsultationMenu() {
-  this.isConsultationMenuOpen = !this.isConsultationMenuOpen;
-  // Optionnel : fermer les autres menus
-  if (this.isConsultationMenuOpen) {
-    this.isAdminMenuOpen = false;
-    this.isGestionMenuOpen = false;
+  toggleConsultationMenu() {
+    this.isConsultationMenuOpen = !this.isConsultationMenuOpen;
+    if (this.isConsultationMenuOpen) {
+      this.closeOthers('consultation');
+    }
   }
-}
+
+  toggleControleMenu() { // Ajouté
+    this.isControleMenuOpen = !this.isControleMenuOpen;
+    if (this.isControleMenuOpen) {
+      this.closeOthers('controle');
+    }
+  }
+
+  /**
+   * Ferme les autres menus pour n'en garder qu'un seul ouvert à la fois
+   */
+  private closeOthers(current: string) {
+    if (current !== 'admin') this.isAdminMenuOpen = false;
+    if (current !== 'gestion') this.isGestionMenuOpen = false;
+    if (current !== 'consultation') this.isConsultationMenuOpen = false;
+    if (current !== 'controle') this.isControleMenuOpen = false;
+  }
 }

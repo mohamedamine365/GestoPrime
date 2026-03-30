@@ -1,0 +1,139 @@
+/* --- Mise en page globale --- */
+.container-fluid {
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* --- Conteneur de recherche --- */
+.search-container {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  width: 300px;
+}
+
+.search-container:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.search-icon {
+  color: #94a3b8;
+  margin-right: 10px;
+}
+
+.search-input {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  background: transparent;
+}
+
+.btn-clear {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  padding: 5px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-clear:hover {
+  color: #ef4444;
+}
+
+/* --- Styles du Tableau --- */
+.card {
+  border: 1px solid #e2e8f0 !important;
+}
+
+.table thead th {
+  background-color: #f1f5f9;
+  color: #64748b;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 15px 10px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* --- Avatar & Badges --- */
+.avatar-sm {
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}
+
+.bg-primary-soft {
+  background-color: #e0e7ff !important;
+  color: #4338ca !important;
+  font-weight: 600;
+}
+
+.mini-text {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* --- Utilitaires de texte --- */
+.text-truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.5em 0.8em;
+}
+
+/* --- Animations --- */
+.animate-in {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .search-container {
+    width: 100%;
+  }
+  
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 15px;
+  }
+}

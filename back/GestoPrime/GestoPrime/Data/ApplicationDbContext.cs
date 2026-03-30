@@ -25,6 +25,7 @@ namespace GestoPrime.Data
         public DbSet<Periode> Periodes { get; set; }
         public DbSet<Pointage> V_CONSULTATION_POINTAGE { get; set; }
         public DbSet<ConsultationSalarie> V_CONSULTATION_SALARIE { get; set; }
+        public DbSet<ControlePlafondPrime> ControlePlafondPrimes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +75,8 @@ namespace GestoPrime.Data
             });
 
             modelBuilder.Entity<ConsultationSalarie>().HasNoKey().ToView("V_CONSULTATION_SALARIE");
+
+            modelBuilder.Entity<ControlePlafondPrime>().HasNoKey().ToView("V_CONTROLE_PLAFOND_PRIME");
 
         }
     }

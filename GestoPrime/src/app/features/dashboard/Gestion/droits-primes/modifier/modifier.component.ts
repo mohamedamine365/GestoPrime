@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // Pour les pipes et directives de base
-import { DataService } from '../../../../core/services/data.service';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { DataService } from '../../../../../core/services/data.service';
 
 @Component({
   selector: 'app-modifier',
