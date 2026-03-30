@@ -1,0 +1,78 @@
+/* --- Barre de recherche style GestoPrime --- */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  padding: 5px 15px;
+  border: 1px solid #eef2f6;
+}
+
+.search-container i {
+  margin-right: 10px;
+}
+
+.search-container input:focus {
+  box-shadow: none;
+}
+
+/* --- Table Styles --- */
+.main-card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #f8fafd;
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table tbody td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f8fafd;
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+/* --- Badges de Statut --- */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.status-badge.inactive {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+/* --- Empty State --- */
+.empty-icon-wrapper {
+  opacity: 0.3;
+}
+
+.empty-state p {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Animation */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

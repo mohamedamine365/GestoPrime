@@ -16,6 +16,7 @@ export class DataService {
   private readonly periodeApiUrl = `${this.baseUrl}/Periode`;
   private readonly majParamApiUrl = `${this.baseUrl}/Majparametres`;
   private readonly PointageApiUrl = `${this.baseUrl}/Pointage`;
+  private readonly salarieApiUrl = `${this.baseUrl}/Salarie`;
 
   constructor(private http: HttpClient) {}
 
@@ -77,7 +78,7 @@ export class DataService {
 
   // --- LANCER PÉRIODE ---
   lancerNouvellePeriode(periodeCode: string): Observable<any> {
-    return this.http.post(`${this.periodeApiUrl}/lancer`, { periodeCode });
+    return this.http.post(`${this.periodeApiUrl}/lancer-periode`, { periodeCode });
   }
 
   getPeriodes(): Observable<any[]> {
@@ -109,6 +110,19 @@ export class DataService {
         if (Array.isArray(response)) return response;
         if (response && (response as any).data) return (response as any).data;
         return [];
+      })
+    );
+  }
+
+  getSalaries(search?: string): Observable<any[]> {
+    let params = new HttpParams();
+    if (search) params = params.set('search', search);
+
+    return this.http.get<any[]>(this.salarieApiUrl, { params }).pipe(
+      map(response => Array.isArray(response) ? response : []),
+      catchError(err => {
+        console.error('Erreur Consultation Salarié:', err);
+        return throwError(() => err);
       })
     );
   }

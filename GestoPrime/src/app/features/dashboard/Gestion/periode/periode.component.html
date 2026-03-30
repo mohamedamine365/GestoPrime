@@ -1,16 +1,16 @@
-<div class="container mt-4">
+<div class="container-fluid py-4 animate-fade-in">
   <div class="card shadow-sm border-0 mb-4">
     <div class="card-header bg-primary text-white d-flex align-items-center py-3">
-      <i class="bi bi-calendar-check fs-4 me-2"></i>
-      <h5 class="mb-0">Gestion des Périodes de Paie</h5>
+      <i class="bi bi-calendar-plus-fill fs-4 me-2"></i>
+      <h5 class="mb-0 fw-bold">Ouverture d'une Nouvelle Période</h5>
     </div>
     
     <div class="card-body p-4">
-      <div class="row g-3 align-items-end justify-content-center">
+      <div class="row g-3 align-items-end">
         <div class="col-md-4">
           <label class="form-label fw-bold text-secondary small">Année de référence</label>
           <div class="input-group">
-            <span class="input-group-text bg-light text-muted"><i class="bi bi-hash"></i></span>
+            <span class="input-group-text"><i class="bi bi-hash"></i></span>
             <select class="form-select" [(ngModel)]="selectedAnnee">
               <option *ngFor="let a of annees" [value]="a">{{a}}</option>
             </select>
@@ -20,34 +20,37 @@
         <div class="col-md-4">
           <label class="form-label fw-bold text-secondary small">Mois de paie</label>
           <div class="input-group">
-            <span class="input-group-text bg-light text-muted"><i class="bi bi-calendar3"></i></span>
+            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
             <select class="form-select" [(ngModel)]="selectedMois">
               <option *ngFor="let m of moisList" [value]="m.v">{{m.n}}</option>
             </select>
           </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
           <button 
-            class="btn btn-primary w-100 py-2 fw-bold shadow-sm d-flex align-items-center justify-content-center"
+            class="btn btn-primary w-100 py-2 fw-bold d-flex align-items-center justify-content-center"
             (click)="onLancerPeriode()" 
             [disabled]="loading">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
-            <i *ngIf="!loading" class="bi bi-play-fill fs-5"></i>
-            <span>LANCER LA PÉRIODE</span>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            <i *ngIf="!loading" class="bi bi-rocket-takeoff-fill me-2"></i>
+            LANCER LA PÉRIODE
           </button>
         </div>
       </div>
     </div>
     
-    <div class="card-footer bg-light text-center py-2 border-top-0">
-      <small class="text-muted">Code période à créer : <strong class="text-primary">MT{{selectedAnnee}}{{selectedMois}}</strong></small>
+    <div class="card-footer bg-light border-top-0 text-center">
+      <span class="text-muted">Format généré : </span>
+      <strong class="text-primary">MT{{selectedAnnee}}{{selectedMois}}</strong>
     </div>
   </div>
 
   <div class="card shadow-sm border-0">
-    <div class="card-header bg-dark text-white py-3">
-      <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>Historique des lancements</h6>
+    <div class="card-header bg-white py-3 border-bottom">
+      <h6 class="mb-0 text-dark fw-bold">
+        <i class="bi bi-clock-history me-2 text-primary"></i>Historique des lancements
+      </h6>
     </div>
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
@@ -55,13 +58,17 @@
           <tr>
             <th class="ps-4">Code Période</th>
             <th>Statut</th>
-            <th>Utilisateur</th>
-            <th>Date Mouvement</th>
+            <th>Par l'utilisateur</th>
+            <th>Date d'exécution</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let p of periodes">
-            <td class="ps-4 fw-bold text-primary">{{ p.periode_Val || p.periode }}</td>
+            <td class="ps-4">
+              <span class="badge bg-primary-soft text-primary fw-bold">
+                {{ p.periode_Val }}
+              </span>
+            </td>
             <td>
               <span class="badge rounded-pill px-3" 
                 [ngClass]="p.statut === 'Ouverte' ? 'bg-success' : 'bg-secondary'">
@@ -70,20 +77,18 @@
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <div class="avatar-circle me-2 bg-light text-primary d-flex align-items-center justify-content-center rounded-circle" style="width: 24px; height: 24px; font-size: 10px;">
-                  <i class="bi bi-person-fill"></i>
-                </div>
+                <i class="bi bi-person-circle me-2 text-muted"></i>
                 {{ p.utilisateur }}
               </div>
             </td>
             <td class="text-muted small">
-              <i class="bi bi-calendar-event me-1"></i>{{ p.date_Mvt | date:'dd/MM/yyyy HH:mm' }}
+              {{ p.date_Mvt | date:'dd/MM/yyyy HH:mm' }}
             </td>
           </tr>
-          <tr *ngIf="periodes.length === 0">
-            <td colspan="4" class="text-center py-5">
-              <i class="bi bi-inbox fs-1 text-light d-block mb-2"></i>
-              <span class="text-muted">Aucune période n'a été lancée.</span>
+          
+          <tr *ngIf="periodes.length === 0 && !loading">
+            <td colspan="4" class="text-center py-5 text-muted">
+              Aucune période trouvée dans l'historique.
             </td>
           </tr>
         </tbody>

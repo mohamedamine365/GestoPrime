@@ -1,40 +1,107 @@
+/* Animation d'entrée pour la page */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Cartes (Cards) --- */
 .card {
-    border-radius: 12px;
-    overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
 }
 
 .card-header {
-    background: linear-gradient(45deg, #6ea1fa, #6ea1fa) !important;
-    padding: 1.2rem;
+  border-top-left-radius: 16px !important;
+  border-top-right-radius: 16px !important;
+  font-weight: 600;
 }
 
-.instruction-box {
-    background-color: #f8f9fa;
-    border-left: 4px solid #007bff;
-    padding: 1rem;
-    border-radius: 0 8px 8px 0;
-}
-
-.form-select:focus {
-    border-color: #71b5fc;
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.1);
-}
-
-.btn-primary {
-    transition: all 0.3s ease;
-    border-radius: 8px;
-    height: 38px;
-}
-
-.btn-primary:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+/* --- Inputs et Sélecteurs --- */
+.form-label {
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
 }
 
 .input-group-text {
-    border-right: none;
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  border-radius: 10px 0 0 10px;
 }
 
 .form-select {
-    border-left: none;
+  border-color: #e2e8f0;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.95rem;
+  padding: 0.6rem 1rem;
+}
+
+.form-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* --- Bouton Lancer --- */
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* --- Tableau de l'historique --- */
+.table-responsive {
+  border-radius: 0 0 16px 16px;
+}
+
+.table thead th {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 1rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.table tbody td {
+  padding: 1rem;
+  color: #1e293b;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* --- Badges et Avatars --- */
+.badge {
+  font-weight: 600;
+  padding: 0.5em 1em;
+}
+
+.bg-primary-soft {
+  background-color: #eff6ff;
+}
+
+.avatar-circle {
+  border: 1px solid #e2e8f0;
+  font-weight: bold;
+}
+
+/* --- Effet au survol des lignes --- */
+.table-hover tbody tr:hover {
+  background-color: #fcfdfe;
 }

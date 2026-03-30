@@ -15,6 +15,7 @@ import { TauxPrimesComponent } from './features/dashboard/Gestion/taux-primes/ta
 import { PeriodeComponent } from './features/dashboard/Gestion/periode/periode.component';
 import { MajParamComponent } from './features/dashboard/Gestion/maj-param/maj-param.component';
 import { PointageComponent } from './features/dashboard/Consultation/pointage/pointage.component';
+import { ConsultationSalarieComponent } from './features/dashboard/Consultation/consultation-salarie/consultation-salarie.component';
 
 
 export const routes: Routes = [
@@ -54,7 +55,8 @@ export const routes: Routes = [
       { 
         path: 'consultation', 
         children: [
-          { path: 'pointage', component: PointageComponent }
+          { path: 'pointage', component: PointageComponent },
+          { path: 'salarie', component: ConsultationSalarieComponent }
         ]
       }
     ]

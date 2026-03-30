@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../../../core/services/data.service';
-import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import Swal from 'sweetalert2';
+import { DataService } from '../../../../core/services/data.service';
 
 @Component({
   selector: 'app-periode',
@@ -12,10 +13,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './periode.component.css'
 })
 export class PeriodeComponent implements OnInit {
+  // Sélection par défaut (Mois actuel)
   selectedAnnee: number = new Date().getFullYear();
   selectedMois: string = ("0" + (new Date().getMonth() + 1)).slice(-2);
+  
   loading: boolean = false;
-  periodes: any[] = []; // Stockage de l'historique
+  periodes: any[] = [];
 
   annees: number[] = [2024, 2025, 2026, 2027];
   moisList = [
@@ -33,44 +36,41 @@ export class PeriodeComponent implements OnInit {
 
   chargerHistorique() {
     this.dataService.getPeriodes().subscribe({
-      next: (data) => {
-        this.periodes = data;
-      },
-      error: (err) => console.error('Erreur historique:', err)
+      next: (data) => this.periodes = data,
+      error: (err) => console.error('Erreur chargement:', err)
     });
   }
 
   onLancerPeriode() {
-    const periodeCode = `MT${this.selectedAnnee}${this.selectedMois}`;
+    const code = `MT${this.selectedAnnee}${this.selectedMois}`;
 
     Swal.fire({
-      title: 'Confirmation',
-      text: `Voulez-vous vraiment lancer la période ${periodeCode} ? Cela clôturera la période précédente.`,
-      icon: 'warning',
+      title: 'Confirmer le lancement ?',
+      text: `La période ${code} sera créée et la précédente sera clôturée.`,
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Oui, lancer !',
+      confirmButtonText: 'Confirmer',
       cancelButtonText: 'Annuler'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.executeLaunch(periodeCode);
+        this.executeLaunch(code);
       }
     });
   }
 
-  private executeLaunch(code: string) {
+  private executeLaunch(periodeCode: string) {
     this.loading = true;
-    this.dataService.lancerNouvellePeriode(code).subscribe({
+    this.dataService.lancerNouvellePeriode(periodeCode).subscribe({
       next: (res) => {
         this.loading = false;
-        Swal.fire('Succès', 'La période a été lancée.', 'success');
-        this.chargerHistorique(); // Rafraîchir la liste après le lancement
+        Swal.fire('Lancé !', res.message, 'success');
+        this.chargerHistorique();
       },
       error: (err) => {
         this.loading = false;
-        const errorMsg = err.error?.error || 'Erreur lors du lancement';
-        Swal.fire('Erreur', errorMsg, 'error');
+        // Affiche l'erreur renvoyée par ton Backend (Regex ou doublon)
+        const msg = err.error?.message || 'Erreur lors du lancement';
+        Swal.fire('Erreur', msg, 'error');
       }
     });
   }
