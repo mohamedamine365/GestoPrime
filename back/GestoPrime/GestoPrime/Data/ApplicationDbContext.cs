@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GestoPrime.DTOS;
 using GestoPrime.model;
-using GestoPrime.DTOS;
+using GestoPrime.model.GestoPrime.Models;
+using GestoPrime.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestoPrime.Data
 {
@@ -26,6 +28,14 @@ namespace GestoPrime.Data
         public DbSet<Pointage> V_CONSULTATION_POINTAGE { get; set; }
         public DbSet<ConsultationSalarie> V_CONSULTATION_SALARIE { get; set; }
         public DbSet<ControlePlafondPrime> ControlePlafondPrimes { get; set; }
+        public DbSet<ControleIndemniteDeplacement> IndemnitesDeplacement { get; set; }
+        public DbSet<ControleAvancePrime> V_CONTROLE_AVANCE_PRIME { get; set; }
+        public DbSet<ControleUniteGestionnaire> V_CONTROLE_UNITE_GESTIONNAIRE { get; set; }
+        public DbSet<ControlePointage> V_CONTROLE_POINTAGE { get; set; }
+        public DbSet<ControlDroitsPrimes> ControlDroitsPrimes { get; set; }
+        public DbSet<ControleTauxPrimes> ControleTauxPrimes { get; set; }
+        public DbSet<ConsultationPlafondPrimeRendement> ConsultationPlafondPrimeRendements { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,13 +49,15 @@ namespace GestoPrime.Data
             modelBuilder.Entity<MoisSalarie>().ToTable("T_INT_MOIS_SALARIE");
             modelBuilder.Entity<MoisScoreBrut>().ToTable("T_INT_MOIS_SCORE_PPM_BRUT");
 
-            // --- CONFIGURATION DE LA TABLE DE PARAMÉTRAGE UO ---
+
+
             modelBuilder.Entity<UoGestionnaire>(entity =>
             {
                 entity.ToTable("T_PARAM_UNITE_GESTIONNAIRE");
-                entity.HasKey(e => e.id);
+                entity.HasKey(e => e.Id);
 
-                entity.Property(e => e.Unite_Gestionnaire).HasColumnName("Unite_Gestionnaire");
+                // Assurer la correspondance exacte avec les noms SQL si nécessaire
+                entity.Property(e => e.UniteGestionnaire).HasColumnName("Unite_Gestionnaire");
                 entity.Property(e => e.Droit_Hygiene).HasColumnName("Droit_Hygiene");
                 entity.Property(e => e.Droit_Prod).HasColumnName("Droit_Prod");
             });
@@ -67,17 +79,63 @@ namespace GestoPrime.Data
                 entity.ToTable("T_INT_PERIODE");
                 entity.Property(e => e.Periode_Val).HasColumnName("Periode"); // Mappe Periode_Val vers Periode
             });
-           
+
             modelBuilder.Entity<Pointage>(entity =>
             {
-                entity.HasNoKey(); // INDISPENSABLE pour une vue
-                entity.ToView("V_CONSULTATION_POINTAGE"); // Vérifie bien le nom exact ici
+                entity.HasNoKey();
+                entity.ToView("V_CONSULTATION_POINTAGE");
             });
 
             modelBuilder.Entity<ConsultationSalarie>().HasNoKey().ToView("V_CONSULTATION_SALARIE");
 
             modelBuilder.Entity<ControlePlafondPrime>().HasNoKey().ToView("V_CONTROLE_PLAFOND_PRIME");
 
+            modelBuilder.Entity<ControleIndemniteDeplacement>(eb =>
+            {
+                eb.HasNoKey(); // Ou HasKey(x => x.MATRICULE)
+                eb.ToView("V_CONTROLE_CALCUL_PRIME_INDEMNITE_DEPLACEMENT");
+            });
+
+            modelBuilder.Entity<ControleAvancePrime>(entity =>
+            {
+                // Indique à EF que cette entité n'a pas de clé primaire (Vue SQL)
+                entity.HasNoKey();
+
+                // Mappe l'entité au nom exact de la vue dans la base de données
+                entity.ToView("V_CONTROLE_CALCUL_PRIME_AVANCE_PRIME_RESULTAT");
+
+                // Optionnel : Si vos colonnes SQL ont des types spécifiques (ex: decimal 18,3)
+                entity.Property(e => e.PLAFOND).HasColumnType("decimal(18, 3)");
+            });
+
+            modelBuilder.Entity<ControleUniteGestionnaire>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("V_CONTROLE_UNITE_GESTIONNAIRE");
+            });
+
+            modelBuilder.Entity<ControlePointage>(entity =>
+            {
+                entity.HasNoKey(); // C'est une vue sans clé primaire
+                entity.ToView("V_CONTROLE_POINTAGE");
+            });
+
+            modelBuilder.Entity<ControlDroitsPrimes>(entity =>
+            {
+                // On confirme à EF que la clé est Unite_Gestionnaire
+                entity.HasKey(e => e.Unite_Gestionnaire);
+
+                // On mappe sur la vue SQL
+                entity.ToView("V_CONTROLE_DROITS_PRIMES");
+            });
+
+            modelBuilder.Entity<ControleTauxPrimes>(entity =>
+            {
+                entity.HasNoKey(); // Indispensable pour une vue SQL sans ID unique
+                entity.ToView("V_CONTROLE_TAUX_PRIMES");
+            });
+
+            modelBuilder.Entity<ConsultationPlafondPrimeRendement>().HasNoKey();
         }
     }
 }

@@ -32,7 +32,7 @@ export class PlafondPrimeRendementComponent implements OnInit {
 
     // CORRECTION : On appelle getAll avec UN SEUL argument 
     // car le Service et le Backend attendent désormais 'recherche'
-    this.dataService.getAll(terme).subscribe({
+    this.dataService.getAllPlafonds(terme).subscribe({
       next: (data: any[]) => {
         // Le Service s'occupe déjà d'extraire le tableau, 
         // on peut donc assigner directement.

@@ -10,11 +10,14 @@
       <div class="search-container-pro shadow-sm">
         <i class="bi bi-search ms-3 text-muted"></i>
         <input type="text" class="form-control border-0 shadow-none ps-2" 
-               placeholder="Rechercher une unité..." 
-               [(ngModel)]="searchTerm" (input)="onSearchChange()">
+               placeholder="Rechercher une unité ou matricule..." 
+               [(ngModel)]="searchTerm" 
+               (input)="onSearchChange()">
+        
         <div class="divider-v"></div>
         <div class="stats-box px-3">
-          <span class="text-primary fw-bold">{{ dataSource.length }}</span>
+          <span class="text-primary fw-bold" *ngIf="!loading">{{ dataSource.length }}</span>
+          <div class="spinner-border spinner-border-sm text-primary" *ngIf="loading"></div>
           <span class="text-muted extra-small ms-1">Dossiers</span>
         </div>
       </div>
@@ -33,15 +36,23 @@
             <th class="text-end pe-4">Actions</th>
           </tr>
         </thead>
+        
         <tbody>
+          <tr *ngIf="loading">
+            <td colspan="5" class="text-center py-5">
+              <div class="spinner-border text-primary" role="status"></div>
+              <p class="text-muted mt-2 small">Chargement des données...</p>
+            </td>
+          </tr>
+
           <tr *ngFor="let item of paginatedData" class="fade-in">
             <td class="ps-4">
-              <div class="fw-bold text-dark">{{ item.unite_Gestionnaire }}</div>
+              <div class="fw-bold text-dark">{{ item.uniteGestionnaire }}</div>
               <div class="text-muted extra-small">ID: #{{ item.maT_RESP?.substring(0,4) }}</div>
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <div class="avatar-minimal me-2">{{ item.noM_PRENOM_RESP?.charAt(0) }}</div>
+                <div class="avatar-minimal me-2">{{ item.noM_PRENOM_RESP?.charAt(0) || '?' }}</div>
                 <div>
                   <div class="small fw-semibold text-dark">{{ item.noM_PRENOM_RESP }}</div>
                   <div class="text-muted extra-small">Mat: {{ item.maT_RESP }}</div>
@@ -51,19 +62,26 @@
             <td class="text-center">
               <span class="status-indicator" [ngClass]="item.droit_Hygiene ? 'active' : 'inactive'">
                 <i class="bi" [ngClass]="item.droit_Hygiene ? 'bi-check-circle-fill' : 'bi-dash-circle-fill'"></i>
-                {{ item.droit_Hygiene ? 'true' : 'false' }}
+                {{ item.droit_Hygiene ? 'Activé' : 'Désactivé' }}
               </span>
             </td>
             <td class="text-center">
               <span class="status-indicator" [ngClass]="item.droit_Prod ? 'active' : 'inactive'">
                 <i class="bi" [ngClass]="item.droit_Prod ? 'bi-check-circle-fill' : 'bi-dash-circle-fill'"></i>
-                {{ item.droit_Prod ? 'true' : 'false' }}
+                {{ item.droit_Prod ? 'Activé' : 'Désactivé' }}
               </span>
             </td>
             <td class="text-end pe-4">
               <button class="btn btn-edit-minimal shadow-sm" (click)="openModifierDialog(item)">
                 <i class="bi bi-pencil-square"></i>
               </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && dataSource.length === 0">
+            <td colspan="5" class="text-center py-5 text-muted small">
+              <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+              Aucun dossier trouvé pour "{{ searchTerm }}"
             </td>
           </tr>
         </tbody>
@@ -73,21 +91,18 @@
     <div class="card-footer bg-white border-0 py-3 px-4">
       <div class="d-flex justify-content-between align-items-center">
         <div class="text-muted small">
-          Affichage de 
-          <span class="fw-bold text-dark">{{ dataSource.length > 0 ? (currentPage - 1) * pageSize + 1 : 0 }}</span> à 
-          <span class="fw-bold text-dark">{{ Math.min(currentPage * pageSize, dataSource.length) }}</span> 
-          sur <span class="fw-bold text-dark">{{ dataSource.length }}</span> dossiers
+          Affichage de <b>{{ (currentPage - 1) * pageSize + 1 }}</b> à <b>{{ Math.min(currentPage * pageSize, dataSource.length) }}</b> sur <b>{{ dataSource.length }}</b>
         </div>
         <nav>
           <ul class="pagination pagination-sm mb-0 custom-pagination">
             <li class="page-item" [class.disabled]="currentPage === 1">
-              <a class="page-link" (click)="prevPage()" role="button"><i class="bi bi-chevron-left"></i></a>
+              <button class="page-link" (click)="prevPage()"><i class="bi bi-chevron-left"></i></button>
             </li>
             <li class="page-item active">
-              <a class="page-link">{{ currentPage }}</a>
+              <span class="page-link">{{ currentPage }}</span>
             </li>
             <li class="page-item" [class.disabled]="currentPage * pageSize >= dataSource.length">
-              <a class="page-link" (click)="nextPage()" role="button"><i class="bi bi-chevron-right"></i></a>
+              <button class="page-link" (click)="nextPage()"><i class="bi bi-chevron-right"></i></button>
             </li>
           </ul>
         </nav>

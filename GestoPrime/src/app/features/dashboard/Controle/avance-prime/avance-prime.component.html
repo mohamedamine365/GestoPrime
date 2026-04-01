@@ -1,0 +1,71 @@
+<div class="page-container animate-fade-in">
+  
+  <header class="d-flex justify-content-between align-items-start mb-4">
+    <div class="header-text">
+      <h2 class="fw-bold text-dark mb-1">Calcul Avance sur Prime Résultat</h2>
+      <p class="text-muted small">Analyse et contrôle des avances basés sur les jours travaillés et congés.</p>
+    </div>
+
+    <div class="search-section">
+      <div class="search-bar shadow-sm">
+        <i class="bi bi-search me-2 text-muted"></i>
+        <input type="text" 
+               class="form-control border-0 bg-transparent" 
+               placeholder="Rechercher matricule ou nom..." 
+               [(ngModel)]="searchTerm" 
+               (ngModelChange)="onSearchChange()">
+      </div>
+      <div class="text-end mt-2">
+        <span class="badge-count">
+          Nombre des dossiers sélectionnés : <strong>{{ dataSource.length }}</strong>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="data-card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 custom-table">
+        <thead>
+          <tr>
+            <th class="ps-4">PÉRIODE</th>
+            <th>SALARIÉ / MATRICULE</th>
+            <th>STATUT</th>
+            <th class="text-center">PLAFOND</th>
+            <th class="text-center">NBR. JR. TRAV</th>
+            <th class="text-center">NBR. JR. CONGÉ PAYÉ</th>
+            <th class="text-center">CONGÉ NON PAYÉ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="7" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+              <span class="ms-2 text-muted">Chargement en cours...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of dataSource" class="hover-row">
+            <td class="ps-4 fw-medium text-primary">{{ item.periode }}</td>
+            <td>
+              <div class="fw-bold text-dark text-uppercase">{{ item.nomPrenom }}</div>
+              <div class="text-muted small">{{ item.matricule }}</div>
+            </td>
+            <td><span class="status-pill">{{ item.statut }}</span></td>
+            <td class="text-center fw-bold text-dark">{{ item.plafond | number:'1.3-3' }}</td>
+            <td class="text-center">{{ item.nbJoursTravaille }}</td>
+            <td class="text-center">{{ item.nbJoursConge }}</td>
+            <td class="text-center text-danger fw-semibold">{{ item.nbJoursCongeNonPaye }}</td>
+          </tr>
+
+          <tr *ngIf="!loading && dataSource.length === 0">
+            <td colspan="7" class="text-center py-5 text-muted">
+              <i class="bi bi-info-circle d-block fs-3 mb-2"></i>
+              Aucun résultat trouvé.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

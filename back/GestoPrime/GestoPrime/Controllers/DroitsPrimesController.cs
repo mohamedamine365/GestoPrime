@@ -1,5 +1,6 @@
 ﻿using GestoPrime.Data;
 using GestoPrime.DTOS;
+using GestoPrime.model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,63 +17,70 @@ namespace GestoPrime.Controllers
             _context = context;
         }
 
-        // 1. GET : Récupère la liste depuis T_PARAM_UNITE_GESTIONNAIRE
+        // GET: api/DroitsPrimes
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? search)
+        public async Task<ActionResult> GetAll([FromQuery] string? search)
         {
-            // On interroge la table physique au lieu de la vue
-            var query = _context.UoGestionnaires.AsNoTracking().AsQueryable();
+            var query = _context.UoGestionnaires.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                query = query.Where(x => x.Unite_Gestionnaire.Contains(search));
+                // Recherche étendue sur l'unité et le matricule
+                query = query.Where(x => x.UniteGestionnaire.Contains(search)
+                                      || (x.MAT_RESP != null && x.MAT_RESP.Contains(search)));
             }
 
             var items = await query.ToListAsync();
             return Ok(new { items, totalCount = items.Count });
         }
 
-        // 2. GET : Recherche par matricule responsable dans la table physique
+        // GET: api/DroitsPrimes/lookup/07011665
         [HttpGet("lookup/{matricule}")]
-        public async Task<IActionResult> GetByMatricule(string matricule)
+        public async Task<ActionResult<UoGestionnaire>> GetByMatricule(string matricule)
         {
-            // Recherche basée sur la colonne MAT_RESP de la table T_PARAM_UNITE_GESTIONNAIRE
             var info = await _context.UoGestionnaires
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.MAT_RESP == matricule);
 
             if (info == null)
             {
-                return NotFound(new { message = "Responsable introuvable dans le paramétrage." });
+                return NotFound(new { message = $"Responsable avec matricule {matricule} introuvable." });
             }
 
             return Ok(info);
         }
 
-        // 3. POST : Mise à jour des droits dans T_PARAM_UNITE_GESTIONNAIRE
-        [HttpPost("update")]
+        // PUT: api/DroitsPrimes/update
+        // Note: On utilise souvent PUT pour les mises à jour
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] DroitsPrimeDto model)
         {
+            if (model == null) return BadRequest("Les données sont manquantes.");
+
             try
             {
-                if (model == null) return BadRequest(new { message = "Données invalides" });
-
+                // Recherche prioritaire par ID si disponible, sinon par Nom d'unité
                 var entity = await _context.UoGestionnaires
-                    .FirstOrDefaultAsync(u => u.Unite_Gestionnaire == model.Unite_Gestionnaire);
+                    .FirstOrDefaultAsync(u => u.Id == model.Id
+                                         || u.UniteGestionnaire == model.Unite_Gestionnaire);
 
                 if (entity == null)
-                    return NotFound(new { message = "Paramétrage introuvable pour cette unité." });
+                {
+                    return NotFound(new { message = "Unité gestionnaire introuvable dans le paramétrage." });
+                }
 
+                // Mise à jour des propriétés
                 entity.Droit_Hygiene = model.Droit_Hygiene;
                 entity.Droit_Prod = model.Droit_Prod;
+                entity.Utilisateur = model.Utilisateur;
                 entity.Date_Mvt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
-                return Ok(new { message = "Mise à jour réussie !" });
+                return Ok(new { message = "Paramétrage mis à jour avec succès." });
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                return StatusCode(500, new { message = "Erreur SQL", details = ex.Message });
+                return StatusCode(500, new { message = "Erreur lors de la mise à jour en base de données.", details = ex.Message });
             }
         }
     }

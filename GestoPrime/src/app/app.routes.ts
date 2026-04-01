@@ -18,6 +18,14 @@ import { PointageComponent } from './features/dashboard/Consultation/pointage/po
 import { ConsultationSalarieComponent } from './features/dashboard/Consultation/consultation-salarie/consultation-salarie.component';
 import { DroitsPrimesComponent } from './features/dashboard/Gestion/droits-primes/droits-primes.component';
 import { PlafondPrimeRendementComponent } from './features/dashboard/Controle/plafond-prime-rendement/plafond-prime-rendement/plafond-prime-rendement.component';
+import { IndemniteDeplacementComponent } from './features/dashboard/Controle/indemnite-deplacement/indemnite-deplacement/indemnite-deplacement.component';
+import { AvancePrimeComponent } from './features/dashboard/Controle/avance-prime/avance-prime.component';
+import { UniteGestionnaireComponent } from './features/dashboard/Controle/unite-gestionnaire/unite-gestionnaire.component';
+import { ControlePointageComponent } from './features/dashboard/Controle/controle-pointage/controle-pointage.component';
+import { ControlDroitsPrimesComponent } from './features/dashboard/Controle/droits-primes/droits-primes.component';
+import { ControleTauxPrimesComponent } from './features/dashboard/Controle/taux-primes/taux-primes.component';
+import { ConsultPlafondPrimeComponent } from './features/dashboard/Consultation/consult-plafond-prime/consult-plafond-prime.component';
+
 
 
 export const routes: Routes = [
@@ -57,6 +65,13 @@ export const routes: Routes = [
       { 
         path: 'controle', 
         children: [
+          { path: 'plafond-prime', component: PlafondPrimeRendementComponent },
+          { path: 'indemnite-deplacement', component: IndemniteDeplacementComponent },
+          { path: 'avance-prime-resultat', component: AvancePrimeComponent },
+          {path:'unite-gestionnaire',component:UniteGestionnaireComponent},
+          {path:'controle-pointage',component:ControlePointageComponent},
+          { path: 'droits-primes', component: ControlDroitsPrimesComponent },
+          { path: 'controle-taux-primes', component: ControleTauxPrimesComponent },
           { path: 'plafond-prime', component: PlafondPrimeRendementComponent }
         ]
       },
@@ -64,7 +79,8 @@ export const routes: Routes = [
         path: 'consultation', 
         children: [
           { path: 'pointage', component: PointageComponent },
-          { path: 'salarie', component: ConsultationSalarieComponent }
+          { path: 'salarie', component: ConsultationSalarieComponent },
+         { path: 'consult-plafond-prime', component: ConsultPlafondPrimeComponent }
         ]
       }
       

@@ -21,29 +21,22 @@ namespace GestoPrime.Controllers
         {
             try
             {
-                // 1. On prépare la requête
                 var query = _context.V_CONSULTATION_POINTAGE.AsNoTracking().AsQueryable();
 
-                // 2. Filtre par Unité (Insensible à la casse)
+                // Si les deux paramètres reçoivent la même valeur (recherche globale)
                 if (!string.IsNullOrEmpty(unit))
                 {
-                    var searchUnit = unit.Trim().ToLower();
-                    query = query.Where(p => p.UNITE_GESTIONNAIRE.ToLower().Contains(searchUnit));
+                    var search = unit.Trim().ToLower();
+                    // Utilisation de || (OU) pour chercher dans les deux colonnes à la fois
+                    query = query.Where(p => p.UNITE_GESTIONNAIRE.ToLower().Contains(search)
+                                          || p.MATCLE.Contains(search));
                 }
 
-                // 3. Filtre par Matricule
-                if (!string.IsNullOrEmpty(matricule))
-                {
-                    query = query.Where(p => p.MATCLE.Contains(matricule.Trim()));
-                }
-
-                // 4. Exécution
                 var data = await query.ToListAsync();
                 return Ok(data);
             }
             catch (Exception ex)
             {
-                // Si ça plante, on veut savoir pourquoi dans la console Visual Studio
                 return StatusCode(500, $"Erreur interne: {ex.Message}");
             }
         }

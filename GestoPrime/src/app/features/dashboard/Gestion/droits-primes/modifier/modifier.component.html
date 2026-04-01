@@ -11,7 +11,7 @@
       
       <div class="input-field">
         <label>Unité Gestionnaire</label>
-        <input type="text" formControlName="unite_Gestionnaire" readonly class="readonly-field">
+        <input type="text" formControlName="uniteGestionnaire" readonly class="readonly-field">
       </div>
 
       <div class="input-field">
@@ -46,9 +46,18 @@
       </div>
 
       <div class="dialog-actions">
-        <button type="button" class="btn-annuler" (click)="dialogRef.close()">Annuler</button>
-        <button type="button" class="btn-confirmer" (click)="onSave()">Confirmer les modifications</button>
-      </div>
+ <button type="button" 
+        class="btn-annuler" 
+        (click)="onCancel()" 
+        cdkFocusInitial> Annuler
+</button>
+  
+  <button type="button" 
+          class="btn-confirmer" 
+          (click)="onSave()">
+    Confirmer les modifications
+  </button>
+</div>
     </form>
   </div>
 </div>

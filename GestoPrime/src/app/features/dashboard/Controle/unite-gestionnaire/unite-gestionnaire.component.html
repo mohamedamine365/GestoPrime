@@ -1,0 +1,66 @@
+<div class="page-container animate-fade-in">
+  
+  <header class="d-flex justify-content-between align-items-start mb-4">
+    <div class="header-text">
+      <h2 class="fw-bold text-dark mb-1">Unité Gestionnaire</h2>
+      <p class="text-muted small">Consultation des affectations par unité et responsable.</p>
+    </div>
+
+    <div class="search-section">
+      <div class="search-bar shadow-sm">
+        <i class="bi bi-search text-muted"></i>
+        <input type="text" 
+               class="form-control border-0 bg-transparent" 
+               placeholder="Rechercher matricule, nom ou unité..." 
+               [(ngModel)]="searchTerm" 
+               (ngModelChange)="onSearchChange()">
+      </div>
+      
+      <div class="text-end mt-2">
+        <span class="badge-count">
+          Nombre des dossiers sélectionnés : <strong>{{ dataSource.length }}</strong>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="data-card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 custom-table">
+        <thead>
+          <tr>
+            <th class="ps-4">PÉRIODE</th>
+            <th>UNITÉ GESTIONNAIRE</th>
+            <th>MATRICULE</th>
+            <th>NOM & PRÉNOM</th>
+            <th>MATRICULE RESP.</th>
+            <th>NOM & PRÉNOM RESP.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="6" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm"></div>
+              <span class="ms-2 text-muted">Recherche en cours...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of dataSource" class="hover-row">
+            <td class="ps-4 fw-medium text-primary">{{ item.periode }}</td>
+            <td class="fw-bold text-dark">{{ item.unitE_GESTIONNAIRE }}</td>
+            <td>{{ item.matricule }}</td>
+            <td class="text-uppercase">{{ item.noM_PRENOM }}</td>
+            <td>{{ item.matriculE_RESP }}</td>
+            <td class="text-muted small">{{ item.noM_PRENOM_RESP }}</td>
+          </tr>
+          
+          <tr *ngIf="!loading && dataSource.length === 0">
+            <td colspan="6" class="text-center py-5 text-muted">
+              Aucun dossier trouvé pour "{{ searchTerm }}"
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

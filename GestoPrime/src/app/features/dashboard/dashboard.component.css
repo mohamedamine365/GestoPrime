@@ -42,3 +42,45 @@ app-footer {
   flex-shrink: 0; /* Empêche le footer de se réduire si le contenu est long */
   width: 100%;
 }
+
+/* Conteneur principal de la recherche */
+.search-container {
+  position: relative;
+  width: 350px; /* Largeur ajustable selon ton besoin */
+}
+
+/* L'icône de loupe à gauche */
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1.1rem;
+  z-index: 10;
+}
+
+/* Le champ d'entrée arrondi (Style Pill) */
+.search-input {
+  padding: 12px 20px 12px 45px; /* Espace pour l'icône à gauche */
+  border-radius: 50px; /* Rend la barre ovale comme sur l'image */
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* Effet au survol/focus */
+.search-input:focus {
+  background-color: #fff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+/* Style optionnel pour le titre à gauche */
+h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+}

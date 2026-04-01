@@ -1,0 +1,93 @@
+<div class="container-fluid p-4 bg-light min-vh-100">
+  
+  <div class="row align-items-center mb-4 g-3">
+    <div class="col-md-7">
+      <h4 class="fw-bold text-dark mb-1">Contrôle des Taux de Primes</h4>
+      <p class="text-muted small mb-0">Analyse des coefficients d'hygiène et de productivité par période.</p>
+    </div>
+
+    <div class="col-md-5 d-flex flex-column align-items-md-end">
+      <div class="search-container-pro shadow-sm mb-2">
+        <i class="bi bi-search ms-3 text-muted"></i>
+        <input type="text" class="form-control border-0 shadow-none ps-2" 
+               placeholder="Rechercher unité ou période..." 
+               [(ngModel)]="searchTerm" 
+               (input)="onSearchChange()">
+      </div>
+      
+      <div class="text-muted extra-small me-2">
+        Nombre des dossiers sélectionnés : <span class="fw-bold text-primary">{{ dataSource.length }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 custom-table-pro">
+        <thead class="bg-table-header">
+          <tr>
+            <th class="ps-4">Période</th>
+            <th>Unité Gestionnaire</th>
+            <th class="text-center">Nbr. J. Ouv</th>
+            <th class="text-center">Coef Hygiène</th>
+            <th class="text-center">Coef Productivité</th>
+            <th class="text-center">Statut</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="6" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm me-2"></div>
+              <span class="text-muted small">Extraction des données SQL...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of paginatedData" class="fade-in">
+            <td class="ps-4">
+              <span class="text-primary fw-bold">{{ item.periode }}</span>
+            </td>
+            <td>
+              <div class="fw-semibold text-dark">{{ item.uniteGestionnaire || '---' }}</div>
+            </td>
+            <td class="text-center">{{ item.nombreJoursOuvrables }}</td>
+            <td class="text-center fw-bold text-secondary">{{ item.coefHygiene }}</td>
+            <td class="text-center fw-bold text-secondary">{{ item.coefProductivite }}</td>
+            <td class="text-center">
+              <span class="badge" [ngClass]="item.statut === 'Ouverte' ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-secondary'">
+                {{ item.statut }}
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && dataSource.length === 0">
+            <td colspan="6" class="text-center py-5 text-muted">
+              Aucune donnée trouvée pour cette sélection.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-white border-0 py-3 px-4" *ngIf="dataSource.length > pageSize">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="text-muted extra-small">
+          Affichage de {{ paginatedData.length }} dossiers
+        </div>
+        <nav>
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="changePage(currentPage - 1)">Précédent</button>
+            </li>
+            <li class="page-item active">
+              <span class="page-link">{{ currentPage }}</span>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage * pageSize >= dataSource.length">
+              <button class="page-link" (click)="changePage(currentPage + 1)">Suivant</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

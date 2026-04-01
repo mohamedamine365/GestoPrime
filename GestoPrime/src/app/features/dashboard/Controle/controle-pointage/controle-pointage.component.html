@@ -1,0 +1,69 @@
+<div class="page-container animate-fade-in">
+  
+  <header class="d-flex justify-content-between align-items-start mb-4">
+    <div class="header-text">
+      <h2 class="fw-bold text-dark mb-1">Contrôle du Pointage</h2>
+      <p class="text-muted small">Analyse des jours travaillés, congés et coefficients de présence.</p>
+    </div>
+
+    <div class="search-section">
+      <div class="search-bar shadow-sm">
+        <i class="bi bi-search text-muted"></i>
+        <input type="text" 
+               class="form-control border-0 bg-transparent" 
+               placeholder="Rechercher matricule, nom ou unité..." 
+               [(ngModel)]="searchTerm" 
+               (ngModelChange)="onSearchChange()">
+      </div>
+      
+      <div class="text-end mt-2">
+        <span class="badge-count">
+          Nombre des dossiers sélectionnés : <strong>{{ dataSource.length }}</strong>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="data-card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 custom-table">
+        <thead>
+          <tr>
+            <th class="ps-4">PÉRIODE</th>
+            <th>UNITÉ GESTIONNAIRE</th>
+            <th>MATRICULE</th>
+            <th>NOM & PRÉNOM</th>
+            <th class="text-center">NBR. J. TRAV</th>
+            <th class="text-center">NBR. J. CONGÉ</th>
+            <th class="text-center">COEF PRES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="7" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm"></div>
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of dataSource" class="hover-row">
+            <td class="ps-4 fw-medium text-primary">{{ item.periode }}</td>
+            <td class="small">{{ item.unitE_GESTIONNAIRE }}</td>
+            <td class="fw-bold">{{ item.matcle }}</td>
+            <td class="text-uppercase">{{ item.nmpres }}</td>
+            <td class="text-center">{{ item.nombre_Jour_Traville | number:'1.0-1' }}</td>
+            <td class="text-center">{{ item.nombre_Jour_Conge | number:'1.0-1' }}</td>
+            <td class="text-center fw-bold text-success">
+               {{ item.cof_PRES ? (item.cof_PRES | number:'1.0-2') : '-' }}
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && dataSource.length === 0">
+            <td colspan="7" class="text-center py-5 text-muted">
+              Aucun résultat trouvé.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

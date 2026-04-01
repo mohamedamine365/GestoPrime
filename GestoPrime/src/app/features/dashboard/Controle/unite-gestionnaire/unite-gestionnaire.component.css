@@ -1,0 +1,81 @@
+.page-container {
+  padding: 2rem;
+  background-color: #fcfdfe;
+  min-height: 100vh;
+}
+
+/* Organisation de la barre de recherche */
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.search-bar {
+  background: white;
+  border-radius: 12px; /* Arrondi prononcé style image_2dcde5 */
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #edf2f7;
+  width: 420px; /* Largeur équilibrée */
+  transition: all 0.2s ease;
+}
+
+.search-bar:focus-within {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+.search-bar i {
+  font-size: 1.1rem;
+  margin-right: 10px;
+}
+
+.search-bar input::placeholder {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Badge count sous la barre */
+.badge-count {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Style de la table */
+.data-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eff2f5;
+  overflow: hidden;
+}
+
+.custom-table thead th {
+  color: #8493a5;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.custom-table tbody td {
+  padding: 1.1rem 1rem;
+  font-size: 0.88rem;
+}
+
+.hover-row:hover {
+  background-color: #f8fbff;
+}
+
+/* Animation */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

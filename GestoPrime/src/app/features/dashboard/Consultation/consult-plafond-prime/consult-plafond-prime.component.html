@@ -1,0 +1,58 @@
+<div class="main-container">
+  <div class="header-section d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="page-title">Consultation Plafond Prime</h2>
+      <p class="page-subtitle">Analyse simplifiée des plafonds et rubriques par période de rendement.</p>
+    </div>
+
+    <div class="search-wrapper">
+      <i class="bi bi-search search-icon"></i>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Rechercher une unité ou matricule..." 
+        [(ngModel)]="searchTerm"
+        (input)="chargerDonnees()">
+    </div>
+  </div>
+
+  <div class="table-card shadow-sm">
+    <table class="table table-hover custom-table mb-0">
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Matricule</th>
+          <th>Nom & Prénom</th>
+          <th>Unité</th>
+          <th>Responsable</th>
+          <th class="text-center">Date Début</th>
+          <th class="text-center">Date Fin</th>
+          <th class="text-end">Montant (DT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td class="text-secondary">{{ item.periode }}</td>
+          <td><span class="matricule-badge">{{ item.matricule }}</span></td>
+          <td class="fw-bold text-dark">{{ item.nomPrenom }}</td>
+          <td><div class="unit-text">{{ item.uniteGestionnaire }}</div></td>
+          <td>
+            <div class="resp-name">{{ item.nomPrenomResp }}</div>
+            <div class="resp-id text-muted">({{ item.matriculeResp }})</div>
+          </td>
+          
+          <td class="text-center">
+            <span class="date-text">{{ item.dateDebut || '---' }}</span>
+          </td>
+          <td class="text-center">
+            <span class="date-text">{{ item.dateFin || '---' }}</span>
+          </td>
+          
+          <td class="text-end fw-bold text-primary">
+            {{ item.montant | number:'1.3-3' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

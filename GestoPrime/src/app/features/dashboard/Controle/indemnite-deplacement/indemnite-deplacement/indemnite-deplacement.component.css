@@ -1,0 +1,36 @@
+.bg-primary-soft {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.table thead th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.table tbody tr {
+    transition: all 0.2s;
+}
+
+.table tbody tr:hover {
+    background-color: #fbfcfe;
+    transform: scale(1.002);
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+.badge {
+    font-weight: 500;
+}
+.input-group-text, .input-group .btn {
+    border-color: #dee2e6;
+}
+
+.input-group .btn:hover {
+    color: #dc3545 !important; /* Devient rouge au survol pour suggérer l'effacement */
+    background-color: transparent;
+}

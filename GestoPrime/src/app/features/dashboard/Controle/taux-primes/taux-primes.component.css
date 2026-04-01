@@ -1,0 +1,43 @@
+.search-container-pro {
+    background: white;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #eef2f7;
+    height: 45px;
+}
+
+.bg-table-header {
+    background-color: #f8fafc;
+}
+
+.custom-table-pro th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    color: #64748b;
+    font-weight: 700;
+    padding: 15px 10px;
+}
+
+.custom-table-pro td {
+    padding: 15px 10px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.extra-small {
+    font-size: 0.75rem;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

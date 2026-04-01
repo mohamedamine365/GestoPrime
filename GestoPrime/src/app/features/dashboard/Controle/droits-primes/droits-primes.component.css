@@ -1,0 +1,49 @@
+/* Container de recherche arrondi (Pill) */
+.search-container-pro {
+    background: white;
+    border-radius: 50px; /* Très arrondi comme sur l'image */
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid #eef2f7;
+    height: 48px;
+}
+
+.search-container-pro input {
+    background: transparent;
+    font-size: 0.95rem;
+}
+
+.search-container-pro input::placeholder {
+    color: #a0aec0;
+    font-weight: 400;
+}
+
+/* Style spécifique pour les icônes Bootstrap (si vous les utilisez) */
+.bi-search {
+    font-size: 1.1rem;
+}
+
+/* Animation de focus sur la barre */
+.search-container-pro:focus-within {
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15) !important;
+}
+
+/* Styles pour le tableau et badges (Rappel) */
+.status-indicator.active { color: #2ecc71; font-weight: 600; }
+.status-indicator.inactive { color: #e74c3c; font-weight: 600; }
+
+.avatar-minimal {
+    width: 35px;
+    height: 35px;
+    background: #f0f4f8;
+    border-radius: 8px; /* Carré arrondi pour les avatars */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #4a5568;
+}

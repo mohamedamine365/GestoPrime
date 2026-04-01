@@ -18,6 +18,16 @@ export class DataService {
   private readonly PointageApiUrl = `${this.baseUrl}/Pointage`;
   private readonly salarieApiUrl = `${this.baseUrl}/Salarie`;
   private readonly ctrlPrimeapiUrl = `${this.baseUrl}/ControlePlafondPrime`;
+ private readonly indemniteApiUrl = `${this.baseUrl}/IndemniteDeplacement`;
+private readonly avancePrimeApiUrl = `${this.baseUrl}/AvancePrime`;
+private readonly ctrldroitsApiUrl = `${this.baseUrl}/ControlDroitsPrimes`;
+private readonly ctrlTauxPrimeApiUrl = `${this.baseUrl}/ControleTauxPrimes`;
+private readonly consultPlafondPrimeApiUrl = `${this.baseUrl}/ConsultationPlafondPrime`;
+
+
+
+
+
 
   constructor(private http: HttpClient) {}
 
@@ -44,7 +54,7 @@ export class DataService {
   }
 
   // --- GESTION DES DROITS PRIMES (T_PARAM_UNITE_GESTIONNAIRE) ---
-  getDroitsPrimes(search?: string): Observable<any> {
+  gettDroitsPrimes(search?: string): Observable<any> {
     let params = new HttpParams();
     if (search) params = params.set('search', search);
     return this.http.get<any>(this.droitsApiUrl, { params });
@@ -54,9 +64,10 @@ export class DataService {
     return this.http.get<any>(`${this.droitsApiUrl}/lookup/${matricule}`);
   }
 
-  updateDroits(payload: any): Observable<any> {
-    return this.http.post(`${this.droitsApiUrl}/update`, payload);
-  }
+ updateDroits(payload: any): Observable<any> {
+  // S'accorde avec le [HttpPut("update")] du contrôleur
+  return this.http.put<any>(`${this.droitsApiUrl}/update`, payload);
+}
 
   // --- GESTION DES TAUX MENSUELS ---
   getTauxPrimes(searchTerm?: string): Observable<any> {
@@ -127,18 +138,14 @@ export class DataService {
       })
     );
   }
-getAll(recherche?: string): Observable<any> {
+getAllPlafonds(recherche?: string): Observable<any[]> {
     let params = new HttpParams();
-    
-    // On utilise le nom 'recherche' pour correspondre exactement 
-    // au paramètre attendu par le contrôleur C#
     if (recherche && recherche.trim() !== '') {
       params = params.set('recherche', recherche);
     }
 
     return this.http.get<any>(this.ctrlPrimeapiUrl, { params }).pipe(
       map(response => {
-        // Gestion robuste du format de retour (Tableau direct ou objet $values)
         if (Array.isArray(response)) return response;
         if (response && response.$values) return response.$values;
         return response || [];
@@ -149,4 +156,115 @@ getAll(recherche?: string): Observable<any> {
       })
     );
   }
+
+
+ getIndemnitesDeplacement(recherche?: string): Observable<any[]> {
+    let params = new HttpParams();
+    if (recherche && recherche.trim() !== '') {
+      params = params.set('recherche', recherche);
+    }
+
+    return this.http.get<any>(this.indemniteApiUrl, { params }).pipe(
+      map(response => {
+        let data = response;
+        if (response && response.$values) {
+          data = response.$values;
+        }
+        return Array.isArray(data) ? data : [];
+      }),
+      catchError(err => {
+        console.error('Erreur IndemniteDeplacement:', err);
+        return throwError(() => err);
+      })
+    );
+  }
+
+
+  getAvancesPrime(recherche?: string): Observable<any[]> {
+  let params = new HttpParams();
+  
+  if (recherche && recherche.trim() !== '') {
+    params = params.set('recherche', recherche.trim());
+  }
+
+  return this.http.get<any>(this.avancePrimeApiUrl, { params }).pipe(
+    map(response => {
+      // Log pour débogage (à retirer en production)
+      console.log("Réponse brute Avance Prime:", response);
+
+      // Gestion du format de réponse (Tableau direct ou objet $values)
+      let data = response;
+      if (response && response.$values) {
+        data = response.$values;
+      }
+
+      // Sécurité NG0900 : On s'assure de toujours renvoyer un tableau
+      return Array.isArray(data) ? data : [];
+    }),
+    catchError(err => {
+      console.error('Erreur lors de la récupération des Avances Prime:', err);
+      // On retourne un tableau vide pour ne pas casser le composant
+      return of([]);
+    })
+  );
+}
+
+getControleUnites(recherche: string): Observable<any[]> {
+  let params = new HttpParams();
+  if (recherche) params = params.set('recherche', recherche);
+  
+  return this.http.get<any>(`${this.baseUrl}/ControleUnite`, { params }).pipe(
+    map(res => res?.$values || res || [])
+  );
+}
+
+getControlePointage(recherche: string): Observable<any[]> {
+  return this.http.get<any>(`${this.baseUrl}/ControlePointage?recherche=${recherche}`).pipe(
+    map(res => res?.$values || res || [])
+  );
+}
+
+
+getControldroitsprime(searchTerm?: string): Observable<any[]> {
+  let params = new HttpParams();
+  if (searchTerm) {
+    params = params.set('searchTerm', searchTerm); // Doit matcher le nom de l'argument C#
+  }
+
+  return this.http.get<any>(this.ctrldroitsApiUrl, { params }).pipe(
+    map(res => {
+      // Extraction sécurisée du tableau
+      const data = res.items || res.$values || res;
+      return Array.isArray(data) ? data : [];
+    }),
+    catchError(err => {
+      console.error('Erreur getControldoitsprime:', err);
+      return of([]); 
+    })
+  );
+}
+
+
+
+
+getControleTauxPrimes(searchTerm: string = ''): Observable<any> {
+    let params = new HttpParams();
+    
+    if (searchTerm) {
+      params = params.set('searchTerm', searchTerm);
+    }
+
+    return this.http.get<any>(this.ctrlTauxPrimeApiUrl, { params });
+  }
+
+
+  //consultationPlafondPrime
+  getConsultationsPlafondPrime(searchTerm: string = ''): Observable<any> {
+    let params = new HttpParams().set('searchTerm', searchTerm);
+    return this.http.get<any>(this.consultPlafondPrimeApiUrl, { params });
+  }
+     
+
+
+
 }

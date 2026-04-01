@@ -1,0 +1,100 @@
+<div class="container-fluid p-4 bg-light min-vh-100">
+  
+  <div class="row align-items-center mb-4 g-3">
+    <div class="col-md-7">
+      <h4 class="fw-bold text-dark mb-1">Contrôle des Droits Primes</h4>
+      <p class="text-muted small mb-0">Analyse en temps réel des droits et coefficients depuis la vue SQL.</p>
+    </div>
+
+    <div class="col-md-5 d-flex flex-column align-items-md-end">
+      <div class="search-container-pro shadow-sm mb-2">
+        <i class="bi bi-search ms-3 text-muted"></i>
+        <input type="text" class="form-control border-0 shadow-none ps-2" 
+               placeholder="Rechercher matricule, nom ou unité..." 
+               [(ngModel)]="searchTerm" 
+               (input)="onSearchChange()">
+      </div>
+      
+      <div class="text-muted extra-small me-2">
+        Nombre des dossiers sélectionnés : <span class="fw-bold text-primary">{{ dataSource.length }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 custom-table-pro">
+        <thead>
+          <tr>
+            <th class="ps-4">Unité Gestionnaire</th>
+            <th>Matricule</th>
+            <th>Nom & Prénom Responsable</th>
+            <th class="text-center">Droit Hygiène</th>
+            <th class="text-center">Droit Productivité</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="5" class="text-center py-5">
+              <div class="spinner-border text-primary spinner-border-sm me-2"></div>
+              <span class="text-muted small">Synchronisation avec la base de données...</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of paginatedData" class="fade-in">
+            <td class="ps-4 fw-semibold text-dark">
+              {{ item.unite_Gestionnaire || 'N/A' }}
+            </td>
+            <td>
+              <span class="badge bg-light text-dark border px-2">
+                {{ item.maT_RESP }}
+              </span>
+            </td>
+            <td>{{ item.noM_PRENOM_RESP }}</td>
+            <td class="text-center">
+              <span [class]="item.droit_Hygiene ? 'text-success fw-bold' : 'text-danger fw-bold'">
+                <i class="bi" [ngClass]="item.droit_Hygiene ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                {{ item.droit_Hygiene ? ' Activé' : ' Désactivé' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <span [class]="item.droit_Prod ? 'text-success fw-bold' : 'text-danger fw-bold'">
+                <i class="bi" [ngClass]="item.droit_Prod ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                {{ item.droit_Prod ? ' Activé' : ' Désactivé' }}
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && dataSource.length === 0">
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="bi bi-search fs-2 d-block mb-2 opacity-50"></i>
+              Aucune donnée correspondante trouvée.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-white border-0 py-3 px-4" *ngIf="dataSource.length > 0">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="text-muted small">
+          Affichage de <b>{{ paginatedData.length }}</b> sur <b>{{ dataSource.length }}</b> dossiers
+        </div>
+        <nav>
+          <ul class="pagination pagination-sm mb-0 custom-pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link shadow-none" (click)="changePage(currentPage - 1)">Précédent</button>
+            </li>
+            <li class="page-item active">
+              <span class="page-link px-3">{{ currentPage }} / {{ totalPages }}</span>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button class="page-link shadow-none" (click)="changePage(currentPage + 1)">Suivant</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
