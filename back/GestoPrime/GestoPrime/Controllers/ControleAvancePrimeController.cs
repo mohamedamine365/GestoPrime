@@ -8,11 +8,11 @@ namespace GestoPrime.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AvancePrimeController : ControllerBase
+    public class ControleAvancePrimeController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public AvancePrimeController(ApplicationDbContext context)
+        public ControleAvancePrimeController(ApplicationDbContext context)
         {
             _context = context;
         }

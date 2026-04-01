@@ -35,6 +35,10 @@ namespace GestoPrime.Data
         public DbSet<ControlDroitsPrimes> ControlDroitsPrimes { get; set; }
         public DbSet<ControleTauxPrimes> ControleTauxPrimes { get; set; }
         public DbSet<ConsultationPlafondPrimeRendement> ConsultationPlafondPrimeRendements { get; set; }
+        public DbSet<ConsultationPlafondIndemniteDeplacement> ConsultationPlafondIndemniteDeplacements { get; set; }
+        public DbSet<ConsultationPlafondAvance> ConsultationPlafondAvances { get; set; }
+        public DbSet<ConsultationUniteGestionnaire> ConsultationUniteGestionnaires { get; set; }
+        public DbSet<ConsultationDroitPrime> ConsultationDroitPrimes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -136,6 +140,30 @@ namespace GestoPrime.Data
             });
 
             modelBuilder.Entity<ConsultationPlafondPrimeRendement>().HasNoKey();
+
+            modelBuilder.Entity<ConsultationPlafondIndemniteDeplacement>(entity =>
+            {
+                entity.HasNoKey(); // Les vues n'ont généralement pas de clé primaire
+                entity.ToView("V_MAJ_PLAFOND_PRIME_INDEMNITE_DEPLACEMENT");
+            });
+
+            modelBuilder.Entity<ConsultationPlafondAvance>(entity =>
+            {
+                entity.HasNoKey(); //
+                entity.ToView("V_MAJ_PLAFOND_PRIME_AVANCE_PRIME_RESULTAT"); //
+            });
+
+            modelBuilder.Entity<ConsultationUniteGestionnaire>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("V_CONSULTATION_UNITE_GESTIONNAIRE");
+            });
+            modelBuilder.Entity<ConsultationDroitPrime>(entity =>
+            {
+                entity.HasNoKey(); // Indique à EF que l'entité n'a pas de clé primaire
+                entity.ToView("V_CONSULTATION_DROITS_PRIMES"); // Lie l'entité à la vue SQL
+            });
         }
+
     }
 }

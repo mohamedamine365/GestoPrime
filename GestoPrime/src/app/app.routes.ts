@@ -25,6 +25,10 @@ import { ControlePointageComponent } from './features/dashboard/Controle/control
 import { ControlDroitsPrimesComponent } from './features/dashboard/Controle/droits-primes/droits-primes.component';
 import { ControleTauxPrimesComponent } from './features/dashboard/Controle/taux-primes/taux-primes.component';
 import { ConsultPlafondPrimeComponent } from './features/dashboard/Consultation/consult-plafond-prime/consult-plafond-prime.component';
+import { ConsultIndemniteDeplacementComponent } from './features/dashboard/Consultation/consult-indemnite-deplacement/consult-indemnite-deplacement.component';
+import { ConsultAvanceComponent } from './features/dashboard/Consultation/consult-prime-avance/consult-prime-avance.component';
+import { ConsultUniteGestionnaireComponent } from './features/dashboard/Consultation/consult-unite-gestionnaire/consult-unite-gestionnaire.component';
+import { ConsultDroitPrimeComponent } from './features/dashboard/Consultation/consult-droit-prime/consult-droit-prime.component';
 
 
 
@@ -80,7 +84,12 @@ export const routes: Routes = [
         children: [
           { path: 'pointage', component: PointageComponent },
           { path: 'salarie', component: ConsultationSalarieComponent },
-         { path: 'consult-plafond-prime', component: ConsultPlafondPrimeComponent }
+         { path: 'consult-plafond-prime', component: ConsultPlafondPrimeComponent },
+         { path: 'consult-indemnite-deplacement', component: ConsultIndemniteDeplacementComponent },
+         { path: 'consult-avance-prime', component: ConsultAvanceComponent},
+         { path: 'consult-unite-gestionnaire', component: ConsultUniteGestionnaireComponent },
+         { path: 'consult-droit-prime', component: ConsultDroitPrimeComponent }
+        
         ]
       }
       

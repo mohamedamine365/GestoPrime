@@ -11,7 +11,7 @@ import { DataService } from '../../../../core/services/data.service';
   styleUrl: './consultation-salarie.component.css'
 })
 export class ConsultationSalarieComponent implements OnInit {
-  // On utilise any[] au lieu du DTO
+ 
   salaries: any[] = []; 
   searchTerm: string = '';
   loading: boolean = false;
@@ -38,7 +38,9 @@ export class ConsultationSalarieComponent implements OnInit {
   }
 
   onSearch(): void {
+    if (this.searchTerm.trim().length >= 0) {
     this.chargerSalaries();
+  }
   }
 
   initialiser(): void {

@@ -26,10 +26,13 @@ namespace GestoPrime.Controllers
                 // 1. Logique de filtrage (Utilise les noms de ton MODEL ConsultationSalarie)
                 if (!string.IsNullOrEmpty(search))
                 {
+                    // On passe tout en minuscule pour ignorer la casse
+                    var sLower = search.ToLower();
+
                     query = query.Where(s =>
-                        (s.Matricule != null && s.Matricule.Contains(search)) ||
-                        (s.NomPrenom != null && s.NomPrenom.Contains(search)) ||
-                        (s.LibelleUnite != null && s.LibelleUnite.Contains(search))
+                        (s.Matricule != null && s.Matricule.ToLower().Contains(sLower)) ||
+                        (s.NomPrenom != null && s.NomPrenom.ToLower().Contains(sLower)) ||
+                        (s.LibelleUnite != null && s.LibelleUnite.ToLower().Contains(sLower))
                     );
                 }
 

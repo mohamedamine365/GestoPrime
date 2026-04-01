@@ -19,10 +19,18 @@ export class DataService {
   private readonly salarieApiUrl = `${this.baseUrl}/Salarie`;
   private readonly ctrlPrimeapiUrl = `${this.baseUrl}/ControlePlafondPrime`;
  private readonly indemniteApiUrl = `${this.baseUrl}/IndemniteDeplacement`;
-private readonly avancePrimeApiUrl = `${this.baseUrl}/AvancePrime`;
+private readonly avancePrimeApiUrl = `${this.baseUrl}/ControleAvancePrime`;
 private readonly ctrldroitsApiUrl = `${this.baseUrl}/ControlDroitsPrimes`;
 private readonly ctrlTauxPrimeApiUrl = `${this.baseUrl}/ControleTauxPrimes`;
 private readonly consultPlafondPrimeApiUrl = `${this.baseUrl}/ConsultationPlafondPrime`;
+private readonly consultIndemniteDeplacementApiUrl = `${this.baseUrl}/ConsultationPlafondIndemnite`;
+private readonly consultPlafondAvanceApiUrl = `${this.baseUrl}/ConsultationPlafondAvance`;
+private readonly consultUniteGestionnaireApiUrl = `${this.baseUrl}/ConsultationUniteGestionnaire`;
+private readonly consultDroitPrimeApiUrl = `${this.baseUrl}/ConsultationDroitPrime`;
+
+
+
+
 
 
 
@@ -126,18 +134,21 @@ private readonly consultPlafondPrimeApiUrl = `${this.baseUrl}/ConsultationPlafon
     );
   }
 
-  getSalaries(search?: string): Observable<any[]> {
-    let params = new HttpParams();
-    if (search) params = params.set('search', search);
-
-    return this.http.get<any[]>(this.salarieApiUrl, { params }).pipe(
-      map(response => Array.isArray(response) ? response : []),
-      catchError(err => {
-        console.error('Erreur Consultation Salarié:', err);
-        return throwError(() => err);
-      })
-    );
+getSalaries(search?: string): Observable<any[]> {
+  let params = new HttpParams();
+  if (search) {
+    // On nettoie les espaces pour les matricules (ex: " 1234" -> "1234")
+    params = params.set('search', search.trim());
   }
+
+  return this.http.get<any[]>(this.salarieApiUrl, { params }).pipe(
+    map(response => Array.isArray(response) ? response : []),
+    catchError(err => {
+      console.error('Erreur lors de la recherche:', err);
+      return throwError(() => err);
+    })
+  );
+}
 getAllPlafonds(recherche?: string): Observable<any[]> {
     let params = new HttpParams();
     if (recherche && recherche.trim() !== '') {
@@ -264,7 +275,64 @@ getControleTauxPrimes(searchTerm: string = ''): Observable<any> {
     return this.http.get<any>(this.consultPlafondPrimeApiUrl, { params });
   }
      
+//consultationindemnitDeplacement
+getConsultationPlafondIndemnite(search?: string): Observable<any[]> {
+    let params = new HttpParams();
+    if (search) {
+      params = params.set('search', search.trim());
+    }
 
+    return this.http.get<any>(this.consultIndemniteDeplacementApiUrl, { params }).pipe(
+      map(res => {
+        // Extraction sécurisée du tableau d'objets
+        const data = res.items || res.$values || res;
+        return Array.isArray(data) ? data : [];
+      }),
+      catchError(err => {
+        console.error('Erreur getConsultationPlafondIndemnite:', err);
+        return of([]); 
+      })
+    );
+  }
+//ConsultationAvancePrime
+  getConsultationAvancePrime(search?: string): Observable<any[]> {
+  let params = new HttpParams();
+  if (search) params = params.set('search', search);
 
+  return this.http.get<any>(this.consultPlafondAvanceApiUrl, { params }).pipe(
+    map(res => {
+      // Gestion du format $values si présent, sinon retourne res
+      const data = res.$values || res;
+      return Array.isArray(data) ? data : [];
+    }),
+    catchError(() => of([])) // Retourne un tableau vide en cas d'erreur
+  );
+}
 
+//ConsultationUnitesGestionnaires
+getConsultationUnitesGestionnaires(search?: string): Observable<any[]> {
+  let params = new HttpParams();
+  if (search) params = params.set('search', search);
+
+  return this.http.get<any>(this.consultUniteGestionnaireApiUrl, { params }).pipe(
+    map(res => {
+      const data = res.$values || res;
+      // On s'assure que c'est un tableau
+      return Array.isArray(data) ? data : [];
+    }),
+    catchError(() => of([]))
+  );
+}
+
+//ConsultationDroitsPrimes
+
+getConsultationDroitsPrimes(search?: string): Observable<any[]> {
+  let params = new HttpParams();
+  if (search) params = params.set('search', search);
+
+  return this.http.get<any>(this.consultDroitPrimeApiUrl, { params }).pipe(
+    map(res => res.$values || res), // Gère le format avec ou sans $values
+    catchError(() => of([]))
+  );
+}
 }

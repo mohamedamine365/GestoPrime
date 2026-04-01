@@ -6,13 +6,14 @@
     </div>
     <div class="col-md-6">
       <div class="search-container shadow-sm">
-        <i class="bi bi-search text-muted"></i>
-        <input type="text" 
-               class="form-control border-0" 
-               [(ngModel)]="searchTerm" 
-               (keyup.enter)="onSearch()"
-               placeholder="Rechercher une unité ou matricule...">
-      </div>
+  <i class="bi bi-search text-muted"></i>
+  <input type="text" 
+         class="form-control border-0" 
+         [(ngModel)]="searchTerm" 
+         (ngModelChange)="onSearch()" 
+         (keyup.enter)="onSearch()"
+         placeholder="Rechercher par nom, unité ou matricule...">
+</div>
     </div>
   </div>
 
